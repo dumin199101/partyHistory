@@ -1,0 +1,130 @@
+<extend name="Index/base" />
+<block name="title">图书详情页</block>
+<block name="header">
+    <link href="__PUBLIC__/css/bookListLeft.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/bookListRight.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/pageAttach.css" rel="stylesheet" />
+</block>
+<block name="content">
+    <include file="Index/middleLeft"/>
+    <div class="bookMeddleRight">
+        <div class="meddleRightTop">
+            <div class="yourPosition">
+                <p>您所在的位置：首页&nbsp;>>&nbsp;<b>图书</b></p>
+            </div>
+            <div class="bookCatTotle">
+                <p>图书分类：<if condition="$dataCat neq null">&nbsp;<span>{$dataCat}</span>&nbsp;的<else/>全部</if>图书有<b>{$count}</b>本</p>
+                <input type="hidden" name="catId" value="{$catId}">
+                <input type="hidden" name="leaderId" value="{$leaderId}">
+            </div>
+        </div>
+
+
+        <div class="bookInfoList">
+            <div class="bookInfoListAndPage">
+            <foreach name="data" item="vo">
+                <div class="bookInfoBox">
+                    <div class="bookInfo">
+                        <div class="bookCoverBox">
+                            <img src="__PUBLIC__/image/book/bookCover.png">
+                        </div>
+                        <div class="bookInfoText">
+                            <div class="bookTitle" >
+                                <h3>{$vo.v_title}</h3>
+                                <div class="bookInformationBox">
+                                    <div class="bookInformation">
+                                        <p>作（编）者：{$vo.v_editor}<span></span></p>
+                                        <p>出版单位：<span>{$vo.v_publish_org}</span></p>
+                                        <p>出版时间：<span>{$vo.v_publish_time}</span></p>
+                                        <p>时间跨度：<span>{$vo.v_time_area}</span></p>
+                                    </div>
+                                    <div class="bookInformation">
+                                        <p>ISBN：<span>{$vo.v_isbn}</span></p>
+                                        <p>语种：<span>{$vo.n_lang_id}</span></p>
+                                        <p>图书分类：<span>{$vo.catname}</span></p>
+                                        <p>文献匹配数：<span>12</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bookReadButtonBox">
+                            <a href="{:U('bookDetails',array('id'=>$vo['n_id']))}"><button class="bookReadButton">浏览</button></a>
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+            </div>
+            <div class="pageBox">
+                <div id="page">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/js/util.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/laypage/laypage.js"></script>
+    <script type="text/javascript">
+
+        var left=$(".middleLeftBox").height();
+        var right=$(".bookMeddleRight").height();
+        if(left>=right){
+            $(".bookMeddleRight").height(left-2);
+        }else{
+            $(".middleLeftBox").height(right+2);
+        }
+        var catId=$("input[name='catId']").val();
+        var leaderId=$("input[name='leaderId']").val();
+        if((catId == "" || catId == undefined || catId == null) && (leaderId == "" || leaderId == undefined || leaderId == null)){
+            bookListPage(1);
+        }else if(catId){
+            bookListPage(1,catId);
+        }else{
+            bookListPage(1,'',leaderId);
+        }
+        function bookListPage(page,catId,leaderId){
+            var html='';
+            $.ajax({
+                url:'{:U("bookListAjax")}',
+                dataType:'json',
+                type:'POST',
+                data:{page:page,catId:catId,leaderId:leaderId},
+                success:function (data) {
+                    console.log(data.data);
+                    $(data.data).each(function(i,val){
+                        var langName='';
+                        switch(val.n_lang_id){
+                            case '1':
+                                langName='中文简体';
+                                break;
+                            case '2':
+                                langName='中文繁体';
+                                break;
+                            case '3':
+                                langName='英文';
+                                break;
+                        }
+                        html+='<div class="bookInfoBox"><div class="bookInfo"><div class="bookCoverBox"><img src="__PUBLIC__/image/book/bookCover.png"></div><div class="bookInfoText"><div class="bookTitle" ><h3>'+val.v_title+'</h3><div class="bookInformationBox"><div class="bookInformation"><p>作（编）者：<span>'+val.v_editor+'</span></p><p>出版单位：<span>'+val.v_publish_org+'</span></p> <p>出版时间：<span>'+val.v_publish_time+'</span></p><p>时间跨度：<span>'+val.v_time_area+'</span></p></div><div class="bookInformation"><p>ISBN：<span>'+val.v_isbn+'</span></p><p>语种：<span>'+langName+'</span></p> <p>图书分类：<span>'+val.catname+'</span></p><p>文献匹配数：<span>'+val.n_catalog_num+'</span></p></div></div></div></div><div class="bookReadButtonBox"><a href="__MODULE__/Index/bookDetails/id/'+val.n_id+'"><button class="bookReadButton">浏览</button></a></div></div></div>';
+                    });
+                    $('.bookInfoListAndPage').html(html);
+                    if(data.count.total_count>data.pageSize){
+                        if((catId == "" || catId == undefined || catId == null) && (leaderId == "" || leaderId == undefined || leaderId == null)){
+                            display_laypage(data,data.page,'bookListPage');
+                        }
+                        if(catId){
+                            display_laypage(data,data.page,'bookListByCatPage');
+                        }
+                        if(leaderId){
+                            display_laypage(data,data.page,'bookListByLeaderPage');
+                        }
+
+                    }
+                    middleBoxHeight();
+
+                }
+            });
+        }
+
+
+    </script>
+</block>

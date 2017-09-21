@@ -1,0 +1,356 @@
+<extend name="Index/base"/>
+<block name="title">检索结果页</block>
+<block name="header">
+    <script type="application/javascript" src="__PUBLIC__/json2/json2.js"></script>
+    <script type="application/javascript" src="__PUBLIC__/pdf/build/pdf.js"></script>
+    <link href="__PUBLIC__/css/searchInfoList.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/searchList.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/pageAttach.css" rel="stylesheet" />
+    <style>
+
+    </style>
+</block>
+<block name="content">
+    <div class="searchListBox">
+        <div class="searchListLeft">
+            <div class="infoBySearchInBookBox">
+                <div class="searchListLeftTop">
+                    <div class="searchPosition">
+                        <if condition="$isAdcenced eq true">
+                            <div class="adcencedConditionBox" >
+                                <div class="adcencedConditionTitle">
+                                    <span >搜索条件：</span>
+                                </div>
+                                <div class="adcencedCondition">
+                                    <foreach name="searchWordArr" item="vs" >
+                                        <div>
+                                            <p><if condition="$vs['fieldRelation'] neq null">{$vs.fieldRelation}&nbsp;</if>{$vs.searchField}:"<span>{$vs.wordStr}</span>"</p>
+                                        </div>
+                                    </foreach>
+                                </div>
+                            </div>
+                            <else/>
+                            搜索位置：<input type="radio" name="searchArea" id="searchAreaAll" onclick="searchArea(this.id);" <if condition="($searchAreaMark eq 'searchAreaAll') or ($searchAreaMark eq '')">checked="checked"</if> ><span>全部</span><span><input type="radio" name="searchArea" id="searchAreaTitle" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaTitle'">checked="checked"</if> >仅标题</span><span><input type="radio" name="searchArea" id="searchAreaContent" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaContent'">checked="checked"</if> >仅全文</span><span><input type="radio" name="searchArea" id="searchAreaAuthor" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaAuthor'">checked="checked"</if> >仅作者</span>
+                        </if>
+                    </div>
+                    <div class="searchSortBox">
+
+                        <span id="searchSort" >排序<img src="__PUBLIC__/image/index/uplist.png"></span>
+                        <div class="sortList" hidden>
+                            <ul>
+                                <li onclick="sortBy(this.id)" id="sortByTimeDesc" >按时间从大到小</li>
+                                <li onclick="sortBy(this.id)" id="sortByTimeAsc" >按时间从小到大</li>
+                                <li onclick="sortBy(this.id)" id="sortByBrowerDesc" >按浏览量从大到小</li>
+                                <li onclick="sortBy(this.id)" id="sortByBrowerAsc" >按浏览量从小到大</li>
+                            </ul>
+                        </div>
+                        <span class="reset">重置</span>
+
+                    </div>
+
+                </div>
+                <div id="searchInfoListBox">
+                    <foreach name="data" item="vd">
+                        <div class="infoBySearchInBook">
+                            <div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__{$vd['v_parent_global']}/{$vd['v_global_guid']}.pdf" target="_blank" ><p>{$vd.v_title}</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>{$vd.n_browser}</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('literatureInfo',array('id'=>$vd['n_id']))}"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>{$vd.v_resource_content}</p></div><div class="attachInfoBySearch"><div>出自文献：<span>{$vd.v_parent_guid}</span></div><div>时间：{$vd.d_publication_time}</div><div>作者：<span>{$vd.v_author}</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div>
+                        </div>
+                    </foreach>
+                </div>
+
+            </div>
+            <div class="relationWord">
+                <if condition="$searchWord neq null"><h3><span>{$searchWord}</span>的相关搜索</h3></if>
+                <foreach name="relatedWord" item="vr"><p class="relationWordBox"><a href="javascript:void(0);" onclick="getSearch(this)" style="color: #0435FD;">{$vr}</a></p></foreach>
+            </div>
+            <div class="pageBox">
+            <if condition="$count gt 20">
+                <div id="page">
+
+                </div>
+            </if>
+            <div class="totalCount">总共有{$count}个结果</div>
+            </div>
+        </div>
+        <div class="searchListRight">
+            <div class="searchListRightBox">
+                <div class="literatureCatList">
+                    <h4>文献分类</h4>
+                    <div class="categoryList">
+                    <foreach name="categoryList" item="vc">
+                        <p><a href="javascript:void(0)" onclick="getCatNameFilter(this)">{$key}</a><span>({$vc})</span></p>
+                    </foreach>
+                    </div>
+                </div>
+                <div class="literatureCatList">
+                    <h4>文献出自</h4>
+                    <div class="parentList" >
+                    <foreach name="parentList" item="vp">
+                        <p><a href="javascript:void(0)" onclick="getParentGuidFilter(this)">{$key}</a><span>({$vp})</span></p>
+                    </foreach>
+                    </div>
+
+                </div>
+                <div class="literatureCatList">
+                    <h4>文献作者</h4>
+
+                        <div class="authorsList">
+                            <foreach name="authorList" item="va"><span><a href="javascript:void(0)" onclick="getAuthorFilter(this)" title="{$key}">{$key}</a>（{$va}）</span></foreach>
+                        </div>
+                </div>
+                <div class="literatureCatList">
+                    <h4>发表时间</h4>
+                    <div class="timesList">
+                        <foreach name="yearList" item="vy">
+                            <span><a href="javascript:void(0)" onclick="getYearFilter(this)">{$key}年</a></span>
+                        </foreach>
+                    </div>
+                </div>
+                <div class="literatureCatList">
+                    <if condition="$relatedWord neq null">
+                    <h4>关键词推荐</h4>
+                    <foreach name="recommendWord" item="vr"><p><a href="javascript:void(0);" onclick="getSearch(this)" >{$key}</a></p></foreach>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas id="the-canvas"></canvas>
+    <!--<script src="__PUBLIC__/pdf/web/viewer.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/laypage/laypage.js"></script>
+    <script type="text/javascript">
+
+        var timeList=$('.timesList').children('span').length;
+        if(timeList<60){
+            $('.timesList').height('100%');
+        }else{
+            $('.timesList').height('800px');
+        }
+        var authorsList=$('.authorsList').children('span').length;
+        if(authorsList<40){
+            $('.authorsList').height('100%');
+        }else{
+            $('.authorsList').height('800px');
+        }
+
+        var categoryList=$('.categoryList').children('p').length;
+        if(categoryList<31){
+            $('.categoryList').height('100%');
+        }else{
+            $('.categoryList').height('800px');
+        }
+
+        var parentList=$('.parentList').children('p').length;
+        if(parentList<31){
+            $('.parentList').height('100%');
+        }else{
+            $('.parentList').height('800px');
+        }
+
+
+        function sortBy(id) {
+            var sort=new Array();
+            switch (id){
+                case 'sortByTimeDesc':
+                    sort[0]='d_publication_time';
+                    sort[1]='desc';
+                    break;
+                case 'sortByTimeAsc':
+                    sort[0]='d_publication_time';
+                    sort[1]='asc';
+                    break;
+                case 'sortByBrowerDesc':
+                    sort[0]='n_browser';
+                    sort[1]='desc';
+                    break;
+                case 'sortByBrowerAsc':
+                    sort[0]='n_browser';
+                    sort[1]='asc';
+                    break;
+            }
+            var data=getSearchData();
+            data=createJson('sort',sort,data);
+            getNewFilter(data);
+        }
+        
+        function middleBoxHeight() {
+            //直接去掉style
+            var windowHeght=$(window).height()-80-140;
+            $(".searchListLeft").removeAttr("style");
+            $(".searchListRight").removeAttr("style");
+            var left=$(".searchListLeft").height();
+            var right=$(".searchListRight").height();
+            if(left<windowHeght && right<windowHeght ){
+                $(".searchListLeft").height(windowHeght);
+            }else {
+                if(left>=right){
+                    $(".searchListLeft").height(left+2);
+                }else{
+                    $(".searchListLeft").height(right-2);
+                }
+            }
+
+        }
+        middleBoxHeight();
+
+        
+        function searchArea(id) {
+            $('#searchAreaMark').val(id);
+            document.getElementById("commenSearch").submit();
+        }
+        
+        function getSearch(it) {
+            var searchWord=it.text;
+            var id=false;
+            $('input[name="searchWord"]').val(searchWord);
+            $('#searchAreaMark').val(id);
+            document.getElementById("commenSearch").submit();
+        }
+        
+        function getCatNameFilter(it) {
+            $(".literatureCatList").find('a').css("color","#0435fd");
+            $(it).css("color","red");
+            var text=it.text;
+            var data=getSearchData();
+            data=createJson('catName',text,data);
+            getNewFilter(data);
+            myScroll();
+        }
+
+        function getParentGuidFilter(it) {
+            $(".literatureCatList").find('a').css("color","#0435fd");
+            $(it).css("color","red");
+            var text=it.text;
+            var data=getSearchData();
+            data=createJson('parentGuid',text,data);
+            getNewFilter(data);
+            myScroll();
+        }
+
+        function getAuthorFilter(it) {
+            $(".literatureCatList").find('a').css("color","#0435fd");
+            $(it).css("color","red");
+            var text=it.text;
+            var data=getSearchData();
+            data=createJson('author',text,data);
+            getNewFilter(data);
+            myScroll();
+        }
+
+        function createJson(prop, val,dataJson) {
+            if(typeof val === "undefined") {
+                delete dataJson[prop];
+            }else{
+                dataJson[prop] = val;
+            }
+            return dataJson;
+        }
+
+        function getSearchData(){
+            var isAdcenced={$isAdcenced};
+            if(isAdcenced==1){
+                var num=$('.fieldRelation').length+1;
+//                var fieldRelation=[];
+                var data={};
+                for(i=1;i<=num;i++){
+                    if(typeof ($('.fieldRelation_'+i).val())!=='underfind'){
+                        data=createJson('fieldRelation_'+i,$('.fieldRelation_'+i).val(),data);
+                    }
+                    if(typeof ($('.searchField_'+i).val())!=='underfind'){
+                        data=createJson('searchField_'+i,$('.searchField_'+i).val(),data);
+                    }
+                    if(typeof ($('input[name="searchFieldInput_'+i+'"]').val())!=='underfind'){
+                        data=createJson('searchFieldInput_'+i,$('input[name="searchFieldInput_'+i+'"]').val(),data);
+                    }
+                    if(typeof ($('input[name="attachFieldInput_'+i+'"]').val())!=='underfind'){
+                        data=createJson('attachFieldInput_'+i,$('input[name="attachFieldInput_'+i+'"]').val(),data);
+                    }
+                    if(typeof ($('.wordRelation_'+i).val())!=='underfind'){
+                        data=createJson('wordRelation_'+i,$('.wordRelation_'+i).val(),data);
+                    }
+                    if(typeof ($('.isAccurate_'+i).val())!=='underfind'){
+                        data=createJson('isAccurate_'+i,$('.isAccurate_'+i).val(),data);
+                    }
+
+                }
+                data=createJson('timeStart',$('input[name="timeStart"]').val(),data);
+                data=createJson('timeEnd',$('input[name="timeEnd"]').val(),data);
+                data=createJson('adcencedMark',$('input[name="adcencedMark"]').val(),data);
+                data=createJson('literatureCat',$('#literatureCat').val(),data);
+            }else{
+                var searchWord=$('input[name="searchWord"]').val();
+                var searchAreaMark=$('input[name="searchAreaMark"]').val();
+                var data={searchWord:searchWord,searchAreaMark:searchAreaMark};
+            }
+            return data;
+        }
+
+        function getYearFilter(it) {
+            $(".literatureCatList").find('a').css("color","#0435fd");
+            $(it).css("color","red");
+            var text=it.text;
+            var reg = new RegExp("年");
+            text= text.replace(reg,"");
+            var data=getSearchData();
+            data=createJson('publicationYear',text,data);
+            getNewFilter(data);
+            myScroll();
+        }
+
+
+        function getNewFilter(dataJson) {
+            var html='';
+            $.ajax({
+                url:"{:U('ajaxSearchData')}",
+                dateType:'json',
+                type:'POST',
+                data:dataJson,
+                success:function (data) {
+                    $(data.data).each(function(i,val){
+                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank"><p>'+val.v_title+'</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div></div>';
+                    });
+                    $("#searchInfoListBox").html(html);
+                    //总数
+                    $(".totalCount").html('总共有'+data.count.total_count+'个结果');
+                    var pageData = new Object();
+                    pageData.count = data.count.total_count
+                    pageData.pageSize =  {$pageSize};
+                    display_laypage(pageData,dataJson,true);
+                    if(data.count.total_count<pageData.pageSize){
+                        $("#page").hide();
+                    }else{
+                        $("#page").show();
+                    }
+
+
+                }
+
+            });
+        }
+
+            var dataJson = getSearchData();
+            var data = new Object();
+            data.count = {$count};
+            data.pageSize = {$pageSize};
+            display_laypage(data, dataJson);
+        function display_laypage(data,dataJson,mold){
+            laypage({
+                cont: 'page', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                pages: Math.ceil(data.count/data.pageSize), //通过后台拿到的总页数
+                curr: dataJson.page || 1, //当前页
+                groups:7,
+//                //skip:true,
+                jump: function(obj, first){ //触发分页后的回调
+                    if(!first){
+                        dataJson.page=obj.curr;
+                        getNewFilter(dataJson);
+                        myScroll();
+                    }
+
+                }
+            });
+        }
+        function myScroll() {
+            $(window).scrollTop(0);
+        }
+    </script>
+</block>

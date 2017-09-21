@@ -1,0 +1,33 @@
+#page{
+    margin: 20px auto;
+    text-align: center;
+    width: 70%;
+    display: inline-block;
+
+}
+.laypage_prev{
+    display: inline-block;
+    border: none;
+    border-radius: 50%;
+    background: url("../image/pre.png") no-repeat center ;
+}
+.laypage_next{
+    display: inline-block;
+    border: none;
+    border-radius: 50%;
+    background: url("../image/next.png") no-repeat center ;
+}
+.pageBox{
+    position: relative;
+}
+
+.totalCount{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-20px);
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    width: 20%;
+    display: inline-block;
+}

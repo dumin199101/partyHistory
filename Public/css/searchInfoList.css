@@ -1,0 +1,78 @@
+.infoBySearchInBookBox{
+    width: 96%;
+    margin: 20px auto;
+    border: 1px solid #D7D7D7;
+    border-radius: 3px;
+    background-color: white;
+}
+.infoBySearchInBook{
+    width: 96%;
+    margin: 2%;
+    height: 100%;
+    border-bottom: 1px dashed #AEAEAE;
+}
+.infoBySearchInBook h4{
+    color: #4C78FD;
+}
+.infoBySearchTopBox{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+.infoBySearchLeftTop{
+    display: inline-block;
+    width: 73%;
+    height: 40px;
+}
+.infoBySearchLeftTop p{
+    width: 100%;
+    display:block;
+    clear:both;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+.infoBySearchLeftTop p a{
+    color: #4C78FD;
+}
+.infoBySearchRightTop{
+    width: 25%;
+    float: right;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.attachInfoBySearch{
+    width: 100%;
+    height: 65px;
+    line-height: 25px;
+    color: #25A67B;
+    padding: 20px 0px;
+    margin-bottom: 20px;
+}
+.attachInfoBySearch div{
+    display: inline-block;
+    margin-right: 3%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.attachInfoBySearch div span{
+    color: #2F2FFD;
+    overflow: hidden;
+
+
+}
+.attachInfoBySearch div:nth-child(1){
+    width: 40%;
+}
+.attachInfoBySearch div:nth-child(2){
+    width: 20%;
+}
+.attachInfoBySearch div:nth-child(3){
+    width: 30%;
+}
+.attachInfoBySearch div:nth-child(4){
+    width: 100%;
+}

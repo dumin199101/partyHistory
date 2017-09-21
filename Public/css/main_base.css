@@ -1,0 +1,68 @@
+.baseTop{
+    border-bottom: 1px solid #E4E4E4;
+}
+.baseTopBox{
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+.mainBox{
+    width: 1200px;
+    height: 100%;
+    position: relative;
+    margin: 0px auto;
+}
+.leftTop{
+    margin-left:2%;
+}
+.leftLogo{
+    width: 30%;
+    margin:5px 0px;
+}
+.leftSearch{
+    width: 55%;
+    margin: 10px 0px;
+}
+.rightTop{
+    position: absolute;
+    right: 0px;
+}
+.search{
+    height: 35px;
+    line-height: 33px;
+}
+.searchInput{
+    height: 33px;
+}
+.topBox{
+    margin: 0px;
+}
+.topBox ul{
+    margin-right: 0px;
+}
+.searchText p span{
+    margin:0px 0px 10px 2%;
+}
+.searchText a{
+    color: #a39569;
+}
+.small_bg{
+    top:23px;
+}
+.moreList ul{
+    margin-top: 30px;
+}
+.searchField select{
+    width: 70px;
+}
+.addButton{
+    margin-right: 10px;
+}
+.main_footer{
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    background-color: #F5F3EF;
+}

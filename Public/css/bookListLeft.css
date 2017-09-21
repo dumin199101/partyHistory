@@ -1,0 +1,46 @@
+/*左侧*/
+.middleLeftBox{
+    display: inline-block;
+    width: 25%;
+    height: 100%;
+    margin:0 2%;
+}
+.bookSubjectBox{
+    width: 100%;
+}
+.title_en{
+    font-size: 12px;
+}
+.bookSubject{
+    width: 100%;
+    margin: 10px auto;
+}
+.subjectBox{
+    height: 45px;
+    line-height:45px;
+    font-size: 16px;
+    text-align: center;
+    color: #817557;
+    border: 1px solid #CDC4AC;
+}
+.subjectBox a{
+    color: #817557;
+}
+.bookListBox{
+    width: 100%;
+    margin: 1% auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.leaderListBox{
+    width:49%;
+    margin: 0.5% 0.5% ;
+    display: inline-block;
+}
+
+
+.allSujects{
+    background-color: #CDC4AC;
+    color: white;
+}

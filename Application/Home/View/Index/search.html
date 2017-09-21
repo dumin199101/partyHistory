@@ -1,0 +1,86 @@
+<div class="search">
+    <form action="{:U('searchList')}" method="post" id="commenSearch">
+        <input name="searchWord" value="{$searchWord}" class="searchInput" autocomplete="off" >
+        <!--<input type="hidden" name="parentGuid" id="parentGuid" value=""/>-->
+        <input type="hidden" name="searchAreaMark" id="searchAreaMark" value="{$searchAreaMark}"/>
+        <!--<input type="hidden" name="searchAreaMark" id="searchAreaMark" value="{$searchAreaMark}"/>-->
+        <div class="advancedSearch" onclick="advanceSearchShow()">
+            <span>高级检索</span>&nbsp;<img src="__PUBLIC__/image/index/uplist.png">
+        </div>
+        <button type="submit" class="serachButton"></button>
+    </form>
+    <form action="{:U('searchList')}" method="post" id="advancedSearchForm">
+        <div class="advancedSearchBox" id="searchField_1">
+            <h3>输入检索条件</h3>
+            <div class="conditionBox">
+                <if condition="$adcencedSearWord neq ''">
+                    <foreach name="adcencedSearWord['title']" item="vat">
+                        <div class="searchField">
+                                <if condition="$vat['fieldRelation'] neq null">
+                                    <select name="fieldRelation_{$key}" class="fieldRelation fieldRelation_{$key}">
+                                        <option value="1" <if condition="$vat['fieldRelation'] eq 1">selected="selected"</if> >并且</option>
+                                        <option value="2" <if condition="$vat['fieldRelation'] eq 2">selected="selected"</if>  >或者</option>
+                                        <option value="3" <if condition="$vat['fieldRelation'] eq 3">selected="selected"</if> >异或</option>
+                                    </select>
+                                    <else/>
+                                    <div class="addButton" onclick="addField()">+</div><div class="addButton" onclick="removeField()">-</div>
+                                </if>
+                            <select name="searchField_{$key}" class="searchField_{$key}">
+                                <option value="1"<if condition="$vat['searchField'] eq 1">selected="selected"</if>>标题</option>
+                                <option value="2" <if condition="$vat['searchField'] eq 2">selected="selected"</if> >正文</option>
+                                <option value="3" <if condition="$vat['searchField'] eq 3">selected="selected"</if> >作者</option>
+                            </select>
+                            <input name="searchFieldInput_{$key}" value="{$vat['searchFieldInput']}">
+                            <select name="wordRelation_{$key}" class="wordRelation_{$key}">
+                                <option value="1" <if condition="$vat['wordRelation'] eq 1">selected="selected"</if> >并含</option>
+                                <option value="2" <if condition="$vat['wordRelation'] eq 2">selected="selected"</if> >或者</option>
+                                <option value="3" <if condition="$vat['wordRelation'] eq 3">selected="selected"</if> >不含</option>
+                            </select>
+                            <input name="attachFieldInput_{$key}" value="{$vat['attachFieldInput']}">
+                            <select name="isAccurate_{$key}" class="isAccurate_{$key}">
+                                <option value="1" <if condition="$vat['isAccurate'] eq 1">selected="selected"</if> >精确</option>
+                                <option value="2" <if condition="$vat['isAccurate'] eq 2">selected="selected"</if> >模糊</option>
+                            </select>
+                        </div>
+                    </foreach>
+                <else/>
+                    <div class="searchField">
+                        <div class="addButton" onclick="addField()">+</div><div class="addButton" onclick="removeField()">-</div>
+                        <select name="searchField_1">
+                            <option value="1">标题</option>
+                            <option value="2">正文</option>
+                            <option value="3">作者</option>
+                        </select>
+                        <input name="searchFieldInput_1" value="">
+                        <select name="wordRelation_1">
+                            <option value="1" >并含</option>
+                            <option value="2">或者</option>
+                            <option value="3">不含</option>
+                        </select>
+                        <input name="attachFieldInput_1" value="">
+                        <select name="isAccurate_1">
+                            <option value="1">精确</option>
+                            <option value="2">模糊</option>
+                        </select>
+                    </div>
+                </if>
+                <div class="timeSectionBox">
+                    <span>时间跨度：</span>
+                    <input name="timeStart" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeStart']}"<else/>value=""</if>  id="start"  class="laydate-icon historyTime" >&nbsp;&nbsp;至&nbsp;&nbsp;<input name="timeEnd"  id="end"   class="laydate-icon historyTime" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeEnd']}"<else/>value=""</if> >
+                </div>
+                <div class="literatureCat">
+                    <span>文献分类：</span>
+                    <select name="literatureCat"  class="inputText" id="literatureCat" >
+                        <option value="0">全部</option>
+                        <foreach name="catList" item="vac"><option value="{$vac.n_id}" <if condition="$adcencedSearWord eq ''"><elseif condition="$adcencedSearWord['literatureCat'] eq $vac['n_id']"/>selected="selected"</if> >{$vac.v_title}</option></foreach>
+                    </select>
+                </div>
+                <input type="hidden" name="adcencedMark" id="adcencedMark" value="1"/>
+                <div class="advancedSearchButton">
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <button class="buttonStyle">检索</button><button class="buttonStyle">重置</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

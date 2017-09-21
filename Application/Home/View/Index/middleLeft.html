@@ -1,0 +1,54 @@
+<div class="middleLeftBox">
+    <div class="bookSubjectBox">
+        <h2>图书分类</h2>
+        <p class="title_en">SUBJECT OF BOOKS</p>
+        <div class="bookSubject">
+            <div class="allSujects subjectBox categoryPage">
+                <span>全部</span>
+            </div>
+            <div class="subjectBox bookListBox moreCatListBox">
+                <span><a href="javascript:void(0)" onclick="getMorecateList(this.id)" id="1"  class="moreCatList" >查看更多</a></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="bookSubjectBox">
+        <h2>中央领导人</h2>
+        <p class="title_en">THE CENTRAL LEADERS</p>
+        <div class="bookSubject">
+            <div class="allSujects subjectBox">
+                <span>全部</span>
+            </div>
+            <foreach name="leaderNames" item="vo">
+                <div class="subjectBox leaderListBox">
+                    <span><a  href="{:U('bookList',array('leaderId'=>$vo['n_id']))}">{$vo.v_title}</a></span>
+                </div>
+            </foreach>
+
+        </div>
+    </div>
+</div>
+<script style="text/javascript">
+    getMorecateList(0);
+    function getMorecateList(page){
+        var page=parseInt(page)+1;
+        $.ajax({
+            url:"{:U('categoryListMoreAjax')}",
+            type:"POST",
+            dataType:"json",
+            data:{page:page},
+            success:function (data) {
+                var html='';
+                $(data.data).each(function (i,val) {
+                    html+='<div class="subjectBox bookListBox categoryPage"><span><a href="__MODULE__\\Index\\bookList\\catId\\'+val.n_id+'">'+val.v_title+'</a></span></div>';
+                });
+                $(".categoryPage:last").after(html);
+                $('.moreCatList').attr('id',page);
+                if(data.data.length<20){
+                    $('.moreCatListBox').hide();
+                }
+            }
+        });
+    }
+
+</script>

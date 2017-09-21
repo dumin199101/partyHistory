@@ -1,0 +1,150 @@
+<extend name="Index/base"/>
+<block name="title">图书详情页</block>
+<block name="header">
+    <link href="__PUBLIC__/css/bookListLeft.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/bookListRight.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/bookDetail.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/searchInfoList.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/css/pageAttach.css" rel="stylesheet" />
+    <style>
+        #page{
+            width: 100%;
+        }
+    </style>
+</block>
+<block name="content">
+    <include file="Index/middleLeft"/>
+    <div class="bookMeddleRight">
+        <div class="meddleRightTop">
+            <div class="yourPosition">
+                <p>您所在的位置：首页&nbsp;>>&nbsp;<b>图书</b></p>
+            </div>
+        </div>
+        <div class="bookInfoList">
+                <div class="bookInfoBox">
+                    <div class="bookInfo">
+                        <div class="bookCoverBox">
+                            <img src="__PUBLIC__/image/book/bookCover.png">
+                        </div>
+                        <div class="bookInfoText">
+                            <div class="bookTitle" >
+                                <h3>{$bookInfo.v_title}</h3>
+                                <div class="bookInformationBox">
+                                    <div class="bookInformation">
+                                        <p>作（编）者：<span>{$bookInfo.v_editor}</span></p>
+                                        <p>出版单位：<span>{$bookInfo.v_publish_org}</span></p>
+                                        <p>出版时间：<span>{$bookInfo.v_publish_time}</span></p>
+                                        <p>ISBN：<span>{$bookInfo.v_isbn}</span></p>
+                                        <p>语种：<span><if condition="$bookInfo['n_lang_id'] eq 1">中文简体</if></span></p>
+                                        <p>图书分类：<span>{$bookInfo.catname}</span></p>
+                                        <p>文献匹配数：<span>{$bookInfo.n_catalog_num}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="bookReadButtonBox">-->
+                            <!--<button class="bookReadButton">浏览</button>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            <div class="bookAttachInfo">
+                <div class="bookAttachInfoBox">
+                    <div class="bookAttachInfoLeft">
+                        <p><span class="bookAttachInfoMark active" onclick="searchText(this.id)" id="catalog">目录</span>|<span class="bookAttachInfoMark" id="searchInBook" onclick="searchText(this.id)">书内检索</span></p>
+                    </div>
+                    <div class="searchInBookBox">
+                        <input name="searchInBookWord" value="" >
+                        <select name="searchInBookIsAccurate" id="searchInBookIsAccurate">
+                            <option value="1">精确</option>
+                            <option value="0">模糊</option>
+                        </select>
+                        <button onclick="searchInBook()">搜索</button>
+                    </div>
+                    <div class="bookAttachInfoRight" >
+                        <p>找到<span class="count"></span>条结果</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bibliography">
+                <div class="bookFields bookAttachInfoList">
+                    <span class="bookFieldsOrderNum" >序号</span>
+                    <span class="bookFieldsTitle">标题</span>
+                    <span class="bookFieldsAuthor">作者</span>
+                    <span class="bookFieldsTime">时间</span>
+                    <span class="bookFieldsDownload" style="text-align: left;margin-left: 5px;">下载</span>
+                </div>
+                <ul id="catalogList">
+
+                </ul>
+            </div>
+            <div id="page"></div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/laypage/laypage.js"></script>
+    <script type="text/javascript">
+//        middleBoxHeight();
+
+
+        var bookId='{$bookInfo["v_global_guid"]}';
+        function searchInBook(page) {
+            $('.bibliography').hide();
+            var searchInBookWord=$("input[name='searchInBookWord']").val();
+            var searchInBookIsAccurate=$("#searchInBookIsAccurate").val();
+            var page=page;
+            $.ajax({
+                url:"{:U('searchInBookAjax')}",
+                dateType:'json',
+                type:'POST',
+                data:{searchInBookWord:searchInBookWord,searchInBookIsAccurate:searchInBookIsAccurate,page:page,bookId:bookId},
+                success:function (data) {
+
+                    if($('.infoBySearchInBookBox').length && $('.infoBySearchInBookBox').length>0){
+                        $('.infoBySearchInBookBox').remove();
+                    }
+                    var html='<div class="infoBySearchInBookBox">';
+                    $(data.data).each(function(i,val){
+                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><p><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank" >'+val.v_title+'</a></p></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div></div>';
+                    });
+                    html+='</div>';
+                    $('.bookAttachInfo').after(html);
+                    $('.count').html(data.count.total_count);
+                    $("#page").hide();
+                    if(data.count.total_count>data.pageSize){
+                        display_laypage(data,data.page,'searchInBook');
+                    }
+                    middleBoxHeight();
+                }
+            });
+        }
+        catalogList(1);
+        function catalogList(page) {
+
+            $.ajax({
+                url:"{:U('bookCatalogAjax')}",
+                dateType:'json',
+                type:'POST',
+                data:{page:page,bookId:bookId},
+                success:function (data) {
+                    var html='';
+                    $('#catalogList').empty();
+                    $(data.data).each(function(i,val){
+                        html+='<li class="bookAttachInfoList"><span class="bookFieldsOrderNum" >'+parseInt(i+1)+'</span><span class="bookFieldsTitle"><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_guid+'/'+val.v_global_guid+'.pdf" target="_blank">'+val.v_title+'</a></span><span class="bookFieldsAuthor">'+val.v_author+'</span><span class="bookFieldsTime">'+val.d_publication_time+'</span><span class="bookFieldsDownload"><a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png"></a></span></li>';
+                    });
+                    $('#catalogList').html(html);
+                    if(data.count.total_count>data.pageSize){
+                        display_laypage(data,data.page,'catalogList');
+                    }
+                    $('.count').html(data.count.total_count);
+                    middleBoxHeight();
+                }
+
+            });
+        }
+
+
+
+
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/util.js"></script>
+</block>
