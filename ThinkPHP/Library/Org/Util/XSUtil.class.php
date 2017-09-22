@@ -88,7 +88,12 @@ class XSUtil
         if(!empty($docs)&&is_array($docs)){
             if(!empty($params['filter'])&&is_array($params['filter'])) {
                 foreach ($params['filter'] as $key => $val) {
-                    $count[$key . "_count"] = $searchObj->getFacets($key);
+//                    var_dump($searchObj->getFacets($key));die;
+//                    $count[$key . "_count"] =arraySequence($searchObj->getFacets($key));
+                    $count[$key . "_count"] =$searchObj->getFacets($key);
+                    if($key=='v_parent_guid'){
+                        ksort($count[$key . "_count"],SORT_NATURAL);
+                    }
                 }
             }
             foreach ($docs as $k=>$v){

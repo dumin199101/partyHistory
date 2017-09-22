@@ -24,7 +24,7 @@ function addField() {
     var num=$(".searchField").length;
     if(num<6){
         var id=num+1;
-        var html='<div class="searchField" id="searchField_'+id+'"><select name="fieldRelation_'+id+'" class="fieldRelation"> <option value="1" >并且</option> <option value="2" >或者</option> <option value="3" >异或</option> </select><select name="searchField_'+id+'"><option value="1">标题</option> <option value="2" >正文</option> <option value="3" >作者</option> </select> <input name="searchFieldInput_'+id+'" value=""> <select name="wordRelation_'+id+'"> <option value="1" >并含</option> <option value="2" >或者</option> <option value="3" >不含</option> </select> <input name="attachFieldInput_'+id+'" value=""> <select name="isAccurate_'+id+'"> <option value="1" >精确</option> <option value="2" >模糊</option> </select> </div>';
+        var html='<div class="searchField" id="searchField_'+id+'"><select name="fieldRelation_'+id+'" class="fieldRelation fieldRelation_'+id+'"> <option value="1" >并且</option> <option value="2" >或者</option> <option value="3" >异或</option> </select><select name="searchField_'+id+'" class="searchField_'+id+'" ><option value="1">标题</option> <option value="2" >正文</option> <option value="3" >作者</option> </select> <input name="searchFieldInput_'+id+'" value=""> <select name="wordRelation_'+id+'" class="wordRelation_'+id+'"> <option value="1" >并含</option> <option value="2" >或者</option> <option value="3" >不含</option> </select> <input name="attachFieldInput_'+id+'" value=""> <select name="isAccurate_'+id+'" class="isAccurate_'+id+'"> <option value="1" >精确</option> <option value="2" >模糊</option> </select> </div>';
         $(".timeSectionBox").before(html);
     }
 

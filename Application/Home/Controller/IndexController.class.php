@@ -31,8 +31,9 @@ class IndexController extends Controller {
         $data=$this->bookListData(1,$catId,$leaderId);
         $this->assign('leaderNames',$leaderNames);
         $this->assign('data',$data['data']);
-//        var_dump($data);die;
         $this->assign('dataCat',$data['catMark']);
+        $this->assign('dataLeader',$data['leaderMark']);
+        $this->assign('dimensionMark',$data['dimensionMark']);
         $this->assign('catId',$catId);
         $this->assign('leaderId',$leaderId);
         $this->assign('count',$data['count']);
@@ -57,9 +58,11 @@ class IndexController extends Controller {
         $data['catMark']='';
         if($catId){
             $data['catMark']=$data['data'][0]['catname'];
+            $data['dimensionMark']='图书分类';
         }
         if($leaderId){
-            $data['catMark']=$data['data'][0]['leadername'];
+            $data['leaderMark']=$data['data'][0]['leadername'];
+            $data['dimensionMark']='中央领导人';
         }
         $data['count']=$bookModel->where($map)->count();
         return $data;
@@ -88,7 +91,6 @@ class IndexController extends Controller {
         $this->assign('leaderNames',$leaderNames);
         $this->assign('catList',$catList['data']);
         $this->assign('bookInfo',$bookInfo);
-        $this->assign('leaderNames',$leaderNames);
         $this->assign('searchTextMark',2);
         $this->display();
     }
@@ -396,7 +398,8 @@ class IndexController extends Controller {
                         'v_global_guid'=>0,
                         'v_parent_global'=>0,
                         'n_page'=>0,
-                        'n_id'=>0
+                        'n_id'=>0,
+                        'bookId'=>0,
                     )
                 );
 

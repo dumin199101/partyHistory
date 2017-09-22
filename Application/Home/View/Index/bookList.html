@@ -4,16 +4,21 @@
     <link href="__PUBLIC__/css/bookListLeft.css" rel="stylesheet"/>
     <link href="__PUBLIC__/css/bookListRight.css" rel="stylesheet"/>
     <link href="__PUBLIC__/css/pageAttach.css" rel="stylesheet" />
+    <style>
+        #page{
+            width: 100%;
+        }
+    </style>
 </block>
 <block name="content">
     <include file="Index/middleLeft"/>
     <div class="bookMeddleRight">
         <div class="meddleRightTop">
             <div class="yourPosition">
-                <p>您所在的位置：首页&nbsp;>>&nbsp;<b>图书</b></p>
+                <p>您所在的位置：<a href="{:U('index')}">首页&nbsp;>>&nbsp;<a href="{:U('bookList')}"><b>图书列表</b></a></p>
             </div>
             <div class="bookCatTotle">
-                <p>图书分类：<if condition="$dataCat neq null">&nbsp;<span>{$dataCat}</span>&nbsp;的<else/>全部</if>图书有<b>{$count}</b>本</p>
+                <p>{$dimensionMark}<if condition="$dataCat neq null">&nbsp;：<span>{$dataCat}</span>&nbsp;的<elseif condition="$dataLeader neq null" /> ：<span>{$dataLeader}</span>&nbsp;的<else/>全部</if>图书有<b>{$count}</b>本</p>
                 <input type="hidden" name="catId" value="{$catId}">
                 <input type="hidden" name="leaderId" value="{$leaderId}">
             </div>
@@ -26,7 +31,7 @@
                 <div class="bookInfoBox">
                     <div class="bookInfo">
                         <div class="bookCoverBox">
-                            <img src="__PUBLIC__/image/book/bookCover.png">
+                            <img src="__PUBLIC__/image/coverImage/{$vo.n_id}.jpg">
                         </div>
                         <div class="bookInfoText">
                             <div class="bookTitle" >
@@ -104,7 +109,7 @@
                                 langName='英文';
                                 break;
                         }
-                        html+='<div class="bookInfoBox"><div class="bookInfo"><div class="bookCoverBox"><img src="__PUBLIC__/image/book/bookCover.png"></div><div class="bookInfoText"><div class="bookTitle" ><h3>'+val.v_title+'</h3><div class="bookInformationBox"><div class="bookInformation"><p>作（编）者：<span>'+val.v_editor+'</span></p><p>出版单位：<span>'+val.v_publish_org+'</span></p> <p>出版时间：<span>'+val.v_publish_time+'</span></p><p>时间跨度：<span>'+val.v_time_area+'</span></p></div><div class="bookInformation"><p>ISBN：<span>'+val.v_isbn+'</span></p><p>语种：<span>'+langName+'</span></p> <p>图书分类：<span>'+val.catname+'</span></p><p>文献匹配数：<span>'+val.n_catalog_num+'</span></p></div></div></div></div><div class="bookReadButtonBox"><a href="__MODULE__/Index/bookDetails/id/'+val.n_id+'"><button class="bookReadButton">浏览</button></a></div></div></div>';
+                        html+='<div class="bookInfoBox"><div class="bookInfo"><div class="bookCoverBox"><a href="__MODULE__/Index/bookDetails/id/'+val.n_id+'"><img src="__PUBLIC__/image/coverImage/'+val.n_id+'.jpg"></a></div><div class="bookInfoText"><div class="bookTitle" ><h3><a href="__MODULE__/Index/bookDetails/id/'+val.n_id+'">'+val.v_title+'</a></h3><div class="bookInformationBox"><div class="bookInformation"><p>作（编）者：<span>'+val.v_editor+'</span></p><p>出版单位：<span>'+val.v_publish_org+'</span></p> <p>出版时间：<span>'+val.v_publish_time+'</span></p><p>时间跨度：<span>'+val.v_time_area+'</span></p></div><div class="bookInformation"><p>ISBN：<span>'+val.v_isbn+'</span></p><p>语种：<span>'+langName+'</span></p> <p>图书分类：<span>'+val.catname+'</span></p><p>文献匹配数：<span>'+val.n_catalog_num+'</span></p></div></div></div></div><div class="bookReadButtonBox"><a href="__MODULE__/Index/bookDetails/id/'+val.n_id+'"><button class="bookReadButton">浏览</button></a></div></div></div>';
                     });
                     $('.bookInfoListAndPage').html(html);
                     if(data.count.total_count>data.pageSize){

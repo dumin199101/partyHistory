@@ -15,13 +15,13 @@
 .yourPosition{
     margin-left: 2%;
     display: inline-block;
-    width: 24%;
+    width: 26%;
 }
 .meddleRightTop b{
     color: #FA4846;
 }
 .bookCatTotle{
-    width: 72%;
+    width: 70%;
     float: right;
     text-align: right;
     margin-right: 15px;
@@ -88,6 +88,22 @@ h3{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.bookInformation_detail{
+    width: 100%;
+    height: 100%;
+    margin-left: 5%;
+    display: inline-block;
+}
+.bookInformation_detail p{
+    height: 30px;
+    line-height: 30px;
+    color: #787878;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 .bookReadButtonBox{
     float: left;
     width: 10%;

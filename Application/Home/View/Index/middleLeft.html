@@ -3,12 +3,14 @@
         <h2>图书分类</h2>
         <p class="title_en">SUBJECT OF BOOKS</p>
         <div class="bookSubject">
-            <div class="allSujects subjectBox categoryPage">
-                <span>全部</span>
+            <div class="<if condition='$dataCat eq null'> allSujects </if> subjectBox categoryPage">
+                <a href="{:U('bookList')}" class="fullBox">
+                    <span>全部</span>
+                </a>
             </div>
-            <div class="subjectBox bookListBox moreCatListBox">
-                <span><a href="javascript:void(0)" onclick="getMorecateList(this.id)" id="1"  class="moreCatList" >查看更多</a></span>
-            </div>
+            <foreach name="catList" item="vc" >
+                <div class=" <if condition='$dataCat eq $vc[v_title]'> allSujects </if> subjectBox bookListBox categoryPage"><a href="{:U('bookList',array('catId'=>$vc['n_id']))}" class="fullBox" ><span>{$vc.v_title}</span></a></div>
+            </foreach>
 
         </div>
     </div>
@@ -16,39 +18,15 @@
         <h2>中央领导人</h2>
         <p class="title_en">THE CENTRAL LEADERS</p>
         <div class="bookSubject">
-            <div class="allSujects subjectBox">
-                <span>全部</span>
+            <div class="<if condition='$dataLeader eq null'> allSujects </if> subjectBox">
+               <a  href="{:U('bookList')}" class="fullBox"  > <span>全部</span></a>
             </div>
             <foreach name="leaderNames" item="vo">
-                <div class="subjectBox leaderListBox">
-                    <span><a  href="{:U('bookList',array('leaderId'=>$vo['n_id']))}">{$vo.v_title}</a></span>
+                <div class="<if condition='$dataLeader eq $vo[v_title]'> allSujects </if> subjectBox leaderListBox">
+                    <a  href="{:U('bookList',array('leaderId'=>$vo['n_id']))}" class="fullBox" ><span>{$vo.v_title}</span></a>
                 </div>
             </foreach>
 
         </div>
     </div>
 </div>
-<script style="text/javascript">
-    getMorecateList(0);
-    function getMorecateList(page){
-        var page=parseInt(page)+1;
-        $.ajax({
-            url:"{:U('categoryListMoreAjax')}",
-            type:"POST",
-            dataType:"json",
-            data:{page:page},
-            success:function (data) {
-                var html='';
-                $(data.data).each(function (i,val) {
-                    html+='<div class="subjectBox bookListBox categoryPage"><span><a href="__MODULE__\\Index\\bookList\\catId\\'+val.n_id+'">'+val.v_title+'</a></span></div>';
-                });
-                $(".categoryPage:last").after(html);
-                $('.moreCatList').attr('id',page);
-                if(data.data.length<20){
-                    $('.moreCatListBox').hide();
-                }
-            }
-        });
-    }
-
-</script>

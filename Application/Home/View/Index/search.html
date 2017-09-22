@@ -46,19 +46,19 @@
                 <else/>
                     <div class="searchField">
                         <div class="addButton" onclick="addField()">+</div><div class="addButton" onclick="removeField()">-</div>
-                        <select name="searchField_1">
+                        <select name="searchField_1" class="searchField_1" >
                             <option value="1">标题</option>
                             <option value="2">正文</option>
                             <option value="3">作者</option>
                         </select>
-                        <input name="searchFieldInput_1" value="">
-                        <select name="wordRelation_1">
+                        <input name="searchFieldInput_1"  value="">
+                        <select name="wordRelation_1" class="wordRelation_1">
                             <option value="1" >并含</option>
                             <option value="2">或者</option>
                             <option value="3">不含</option>
                         </select>
                         <input name="attachFieldInput_1" value="">
-                        <select name="isAccurate_1">
+                        <select name="isAccurate_1" class="isAccurate_1">
                             <option value="1">精确</option>
                             <option value="2">模糊</option>
                         </select>
@@ -66,7 +66,7 @@
                 </if>
                 <div class="timeSectionBox">
                     <span>时间跨度：</span>
-                    <input name="timeStart" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeStart']}"<else/>value=""</if>  id="start"  class="laydate-icon historyTime" >&nbsp;&nbsp;至&nbsp;&nbsp;<input name="timeEnd"  id="end"   class="laydate-icon historyTime" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeEnd']}"<else/>value=""</if> >
+                    <input name="timeStart" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeStart']}"<else/>value=""</if>  id="start"  class="laydate-icon historyTime" >&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;<input name="timeEnd"  id="end"   class="laydate-icon historyTime" <if condition="$adcencedSearWord neq ''">value="{$adcencedSearWord['timeEnd']}"<else/>value=""</if> >
                 </div>
                 <div class="literatureCat">
                     <span>文献分类：</span>
@@ -78,9 +78,25 @@
                 <input type="hidden" name="adcencedMark" id="adcencedMark" value="1"/>
                 <div class="advancedSearchButton">
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <button class="buttonStyle">检索</button><button class="buttonStyle">重置</button>
+                    <button class="buttonStyle">检索</button><div class="buttonStyle" style="text-align:center" onclick="advanceReset()" >重置</div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+<script type="text/javascript">
+        function advanceReset() {
+            var num=$('.fieldRelation').length+1;
+            for(i=1;i<=num;i++){
+                $('.fieldRelation_'+i).val(1);
+                $('.searchField_'+i).val(1);
+                $('input[name="searchFieldInput_'+i+'"]').val('');
+                $('input[name="attachFieldInput_'+i+'"]').val('');
+                $('.wordRelation_'+i).val(1);
+                $('.isAccurate_'+i).val(1);
+            }
+            $('input[name="timeStart"]').val('');
+            $('input[name="timeEnd"]').val('');
+            $('#literatureCat').val(0);
+        }
+</script>

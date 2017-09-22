@@ -44,7 +44,7 @@
                                 <li onclick="sortBy(this.id)" id="sortByBrowerAsc" >按浏览量从小到大</li>
                             </ul>
                         </div>
-                        <span class="reset">重置</span>
+                        <span class="reset" onclick="searchReset()" >重置</span>
 
                     </div>
 
@@ -52,7 +52,7 @@
                 <div id="searchInfoListBox">
                     <foreach name="data" item="vd">
                         <div class="infoBySearchInBook">
-                            <div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__{$vd['v_parent_global']}/{$vd['v_global_guid']}.pdf" target="_blank" ><p>{$vd.v_title}</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>{$vd.n_browser}</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('literatureInfo',array('id'=>$vd['n_id']))}"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>{$vd.v_resource_content}</p></div><div class="attachInfoBySearch"><div>出自文献：<span>{$vd.v_parent_guid}</span></div><div>时间：{$vd.d_publication_time}</div><div>作者：<span>{$vd.v_author}</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div>
+                            <div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__{$vd['v_parent_global']}/{$vd['v_global_guid']}.pdf" target="_blank" ><p>{$vd.v_title}</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>{$vd.n_browser}</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('literatureInfo',array('id'=>$vd['n_id']))}"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>{$vd.v_resource_content}</p></div><div class="attachInfoBySearch"><div>出自文献：<span><a href="{:U('bookDetails',array('id'=>$vd['bookId']))}" class="literatureFrom" >{$vd.v_parent_guid}</a></span></div><div>时间：{$vd.d_publication_time}</div><div>作者：<span>{$vd.v_author}</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div>
                         </div>
                     </foreach>
                 </div>
@@ -171,6 +171,16 @@
             data=createJson('sort',sort,data);
             getNewFilter(data);
         }
+
+        function searchReset() {
+            var isAdcenced={$isAdcenced};
+            if(isAdcenced==1){
+                advanceReset();
+                document.getElementById("advancedSearchForm").submit();
+            }else{
+                searchArea('searchAreaAll');
+            }
+        }
         
         function middleBoxHeight() {
             //直接去掉style
@@ -276,6 +286,7 @@
                 data=createJson('timeEnd',$('input[name="timeEnd"]').val(),data);
                 data=createJson('adcencedMark',$('input[name="adcencedMark"]').val(),data);
                 data=createJson('literatureCat',$('#literatureCat').val(),data);
+                console.log(data);
             }else{
                 var searchWord=$('input[name="searchWord"]').val();
                 var searchAreaMark=$('input[name="searchAreaMark"]').val();

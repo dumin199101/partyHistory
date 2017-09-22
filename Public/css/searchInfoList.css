@@ -51,6 +51,11 @@
     padding: 20px 0px;
     margin-bottom: 20px;
 }
+
+.literatureFrom{
+    color:#2f2ffd;
+}
+
 .attachInfoBySearch div{
     display: inline-block;
     margin-right: 3%;

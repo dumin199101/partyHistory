@@ -44,3 +44,9 @@
     background-color: #CDC4AC;
     color: white;
 }
+
+.fullBox{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
