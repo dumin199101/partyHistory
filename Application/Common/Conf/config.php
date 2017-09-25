@@ -8,7 +8,8 @@ return array(
     ),
     /*url模式*/
     'URL_MODEL' => '2',
-
+    //开启调试：
+     'SHOW_PAGE_TRACE' => true,
 //    'READ_URL' => 'http://' . $Redpaper . '/Home/Index/read/',
 //    'DOWNLOAD_URL' => 'http://' . $Redpaper . '/Home/Index/download/',
 

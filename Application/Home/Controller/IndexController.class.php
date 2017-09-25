@@ -228,7 +228,13 @@ class IndexController extends Controller {
         }else{
             $searchData=$this->dealCommendSearData();
         }
-        $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$searchData['timeRange'],$catName);
+        if(isset($searchData['timeRange'])){
+            $timeRange=$searchData['timeRange'];
+        }else{
+            $timeRange='';
+        }
+
+        $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$timeRange,$catName);
         $relatedWord=XSUtil::getRelatedQuery($config,$searchData['searchWord']);
         $this->assign('isAdcenced',$isAdcenced);
         $this->assign('searchWordArr',$searchData['searchArr']);
@@ -273,7 +279,7 @@ class IndexController extends Controller {
         }else{
             $searchData=$this->dealCommendSearData();
         }
-        $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$searchData['timeRange'],$catName,$sort);
+        $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$timeRange,$catName,$sort);
         $this->ajaxReturn($data,'json');
     }
 
@@ -345,7 +351,7 @@ class IndexController extends Controller {
     }
 
 
-    public function searchData($config,$name,$page,$author,$accurate=false,$v_publication_year,$parentGuid,$timeRange,$catName,$sort){
+    public function searchData($config,$name,$page,$author,$accurate=false,$v_publication_year,$parentGuid,$timeRange,$catName,$sort=array()){
 
                 $filter=array(
                     'v_author'=>'',

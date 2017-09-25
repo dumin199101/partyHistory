@@ -26,7 +26,7 @@ function get_search_arr($post){
     $num=getSearchwordNum($post);
     $searchArr=array();
     for($i=1;$i<=$num;$i++){
-        if($post['fieldRelation_'.$i]){
+        if(isset($post['fieldRelation_'.$i])){
             $searchArr['title'][$i]['fieldRelation']=$post['fieldRelation_'.$i];
         }else{
             $searchArr['title'][$i]['fieldRelation']=null;
@@ -63,7 +63,7 @@ function get_search_list($array,$num){
     //主体
     for($i=1;$i<=$num;$i++){
             if(!empty($array['searchFieldInput_'.$i]) || !empty($array['attachFieldInput_'.$i])){
-                if($array['fieldRelation_'.$i]){
+                if(isset($array['fieldRelation_'.$i])){
                     $searchStr.=' '.getWordRelation($array['fieldRelation_'.$i]).' ';
                     $searchArr[$i]['fieldRelation']=getChineseRelation($array['fieldRelation_'.$i]);
                 }else{

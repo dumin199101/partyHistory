@@ -180,8 +180,7 @@
 }
 
 .literatureCatList div{
-    overflow: auto;
-    /*height: 800px;*/
+    overflow: hidden;
 }
 
 .relationWordBox{

@@ -80,6 +80,7 @@
                         <p><a href="javascript:void(0)" onclick="getCatNameFilter(this)">{$key}</a><span>({$vc})</span></p>
                     </foreach>
                     </div>
+                    <p onclick="showCatName(this.id)" class="showCatName" id="categoryList_0" hidden><a>查看更多</a></p>
                 </div>
                 <div class="literatureCatList">
                     <h4>文献出自</h4>
@@ -88,14 +89,15 @@
                         <p><a href="javascript:void(0)" onclick="getParentGuidFilter(this)">{$key}</a><span>({$vp})</span></p>
                     </foreach>
                     </div>
+                    <p onclick="showParentGuid(this.id)" class="ParentGuid" id="parentList_0" hidden><a>查看更多</a></p>
 
                 </div>
                 <div class="literatureCatList">
                     <h4>文献作者</h4>
-
                         <div class="authorsList">
                             <foreach name="authorList" item="va"><span><a href="javascript:void(0)" onclick="getAuthorFilter(this)" title="{$key}">{$key}</a>（{$va}）</span></foreach>
                         </div>
+                    <p onclick="showAuthor(this.id)" class="showAuthor" id="authorList_0" hidden><a>查看更多</a></p>
                 </div>
                 <div class="literatureCatList">
                     <h4>发表时间</h4>
@@ -104,6 +106,7 @@
                             <span><a href="javascript:void(0)" onclick="getYearFilter(this)">{$key}年</a></span>
                         </foreach>
                     </div>
+                    <p onclick="showYear(this.id)" class="showYear" id="yearList_0" hidden><a>查看更多</a></p>
                 </div>
                 <div class="literatureCatList">
                     <if condition="$relatedWord neq null">
@@ -119,33 +122,96 @@
     <script type="text/javascript" src="__PUBLIC__/laypage/laypage.js"></script>
     <script type="text/javascript">
 
-        var timeList=$('.timesList').children('span').length;
-        if(timeList<60){
+        var timeList=$('.timesList').find('span').length;
+        if(timeList<9){
             $('.timesList').height('100%');
         }else{
-            $('.timesList').height('800px');
-        }
-        var authorsList=$('.authorsList').children('span').length;
-        if(authorsList<40){
-            $('.authorsList').height('100%');
-        }else{
-            $('.authorsList').height('800px');
+            $('.showYear').show();
+            showYear('yearList_0)');
         }
 
+        var authorsList=$('.authorsList').children('span').length;
+        if(authorsList<6){
+            $('.authorsList').height('100%');
+        }else{
+            $('.showAuthor').show();
+            showAuthor('authorList_0');
+        }
         var categoryList=$('.categoryList').children('p').length;
-        if(categoryList<31){
+        if(categoryList<5){
             $('.categoryList').height('100%');
         }else{
-            $('.categoryList').height('800px');
+            $('.showCatName').show();
+            showCatName('categoryList_0');
         }
 
         var parentList=$('.parentList').children('p').length;
-        if(parentList<31){
+        if(parentList<5){
             $('.parentList').height('100%');
         }else{
-            $('.parentList').height('800px');
+            $('.ParentGuid').show();
+            showParentGuid('parentList_0');
+        }
+        function showParentGuid(id){
+            var parentList=$('.parentList').children('p').length;
+            var clickNumArr=id.split('_');
+            var clickNum=parseInt(clickNumArr[1])+1;
+            if(Math.ceil(parentList/5)>clickNum){
+                var lineHight=clickNum*125+'px';
+                $('.parentList').height(lineHight);
+                $('.ParentGuid').attr('id','parentList_'+clickNum);
+                middleBoxHeight();
+            }else if(Math.ceil(parentList/5)==clickNum){
+                $('.ParentGuid').hide();
+                $('.parentList').height('100%');
+            }
+        }
+        function showCatName(id){
+            var categoryList=$('.categoryList').children('p').length;
+            var clickNumArr=id.split('_');
+            var clickNum=parseInt(clickNumArr[1])+1;
+            if(Math.ceil(categoryList/5)>clickNum){
+                var lineHight=clickNum*125+'px';
+                $('.categoryList_0').height(lineHight);
+                $('.showCatName').attr('id','categoryList_'+clickNum);
+
+            }else if(Math.ceil(categoryList/5)==clickNum){
+                $('.showCatName').hide();
+                $('.categoryList').height('100%');
+            }
+            middleBoxHeight();
         }
 
+        function showAuthor(id){
+            var authorsList=$('.authorsList').children('span').length;
+            var clickNumArr=id.split('_');
+            var clickNum=parseInt(clickNumArr[1])+1;
+            if(Math.ceil(authorsList/6)>clickNum){
+                var lineHight=clickNum*114.7998+'px';
+                $('.authorsList').height(lineHight);
+                $('.showAuthor').attr('id','authorList_'+clickNum);
+            }else if(Math.ceil(authorsList/6)==clickNum){
+                $('.showAuthor').hide();
+                $('.authorsList').height('100%');
+            }
+            middleBoxHeight();
+        }
+
+        function showYear(id){
+            var yearList=$('.timesList').children('span').length;
+            var clickNumArr=id.split('_');
+            var clickNum=parseInt(clickNumArr[1])+1;
+            if(Math.ceil(yearList/9)>clickNum){
+                var lineHight=clickNum*114+'px';
+                $('.timesList').height(lineHight);
+//                alert(clickNum);
+                $('.showYear').attr('id','yearList_'+clickNum);
+            }else if(Math.ceil(yearList/9)==clickNum){
+                $('.showYear').hide();
+                $('.timesList').height('100%');
+            }
+            middleBoxHeight();
+        }
 
         function sortBy(id) {
             var sort=new Array();
