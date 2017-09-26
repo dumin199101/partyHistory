@@ -99,4 +99,12 @@
             $('input[name="timeEnd"]').val('');
             $('#literatureCat').val(0);
         }
+
+        function getSearch(it) {
+            var searchWord=it.text;
+            var id=false;
+            $('input[name="searchWord"]').val(searchWord);
+            $('#searchAreaMark').val(id);
+            document.getElementById("commenSearch").submit();
+        }
 </script>

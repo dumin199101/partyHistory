@@ -104,6 +104,7 @@ class XSUtil
                 foreach ($params['display_keys'] as $key=>$value){
                     $data[$k][$key] = $value==1?$searchObj->highlight($v->$key): $v->$key;
                 }
+                $data[$k]['v_keywords']=dealKeywords($docs[$k]['v_keywords']);
             }
 
         }

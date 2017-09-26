@@ -66,13 +66,7 @@
                 </div>
             </div>
             <div class="bibliography">
-                <div class="bookFields bookAttachInfoList">
-                    <span class="bookFieldsOrderNum" >序号</span>
-                    <span class="bookFieldsTitle">标题</span>
-                    <span class="bookFieldsAuthor">作者</span>
-                    <span class="bookFieldsTime">时间</span>
-                    <span class="bookFieldsDownload" style="text-align: left;margin-left: 5px;">下载</span>
-                </div>
+                <div class="bookFields bookAttachInfoList"><span class="bookFieldsOrderNum" >序号</span><span class="bookFieldsTitle">标题</span><span class="bookFieldsAuthor">作者</span><span class="bookFieldsTime">时间</span><span class="bookFieldsDownload" >下载</span></div>
                 <ul id="catalogList">
 
                 </ul>
@@ -104,7 +98,7 @@
                     }
                     var html='<div class="infoBySearchInBookBox">';
                     $(data.data).each(function(i,val){
-                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><p><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank" >'+val.v_title+'</a></p></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div></div>';
+                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><p><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank" title="'+val.v_title+'" >'+val.v_title+'</a></p></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>关键词：'+val.v_keywords+'</div></div></div>';
                     });
                     html+='</div>';
                     $('.bookAttachInfo').after(html);
@@ -129,7 +123,7 @@
                     var html='';
                     $('#catalogList').empty();
                     $(data.data).each(function(i,val){
-                        html+='<li class="bookAttachInfoList"><span class="bookFieldsOrderNum" >'+parseInt(i+1)+'</span><span class="bookFieldsTitle"><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_guid+'/'+val.v_global_guid+'.pdf" target="_blank">'+val.v_title+'</a></span><span class="bookFieldsAuthor">'+val.v_author+'</span><span class="bookFieldsTime">'+val.d_publication_time+'</span><span class="bookFieldsDownload"><a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png"></a></span></li>';
+                        html+='<li class="bookAttachInfoList"><span class="bookFieldsOrderNum" >'+parseInt(i+1)+'</span><span class="bookFieldsTitle"><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_guid+'/'+val.v_global_guid+'.pdf" target="_blank" title="'+val.v_title+'">'+val.v_title+'</a></span><span class="bookFieldsAuthor" title="'+val.v_author+'" >'+val.v_author+'</span><span class="bookFieldsTime">'+val.d_publication_time+'</span><span class="bookFieldsDownload"><a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png"></a></span></li>';
                     });
                     $('#catalogList').html(html);
                     if(data.count.total_count>data.pageSize){

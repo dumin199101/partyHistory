@@ -403,6 +403,7 @@ class IndexController extends Controller {
                         'v_parent_guid'=>0,
                         'v_global_guid'=>0,
                         'v_parent_global'=>0,
+                        'v_keywords'=>1,
                         'n_page'=>0,
                         'n_id'=>0,
                         'bookId'=>0,
@@ -514,5 +515,11 @@ class IndexController extends Controller {
 //        }else{
 //            var_dump(2222);die;
 //        }
+    }
+
+    public function getResult(){
+        $config=C('SEARCH.PARTYLITERATURE');
+        $data=XSUtil::getResult($config,'毛泽东');
+        var_dump($data);die;
     }
 }

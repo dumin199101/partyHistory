@@ -55,8 +55,22 @@ function get_search_arr($post){
     return $searchArr;
 }
 
+function dealKeywords($str){
+    $array=array();
+    $array=explode(',',$str);
+    foreach ($array as $key=>$value){
+        $array[$key]='<a href="javascript:void(0)" onclick="getSearch(this)" style="color:#25a67b">'.$value.'</a>';
+    }
+    $newStr=implode(' ',$array);
+    return $newStr;
+}
 
 
+/***
+ * @param $array 原数组
+ * @param $num （检索添加的数量）
+ * @return mixed
+ */
 function get_search_list($array,$num){
     $searchArr=array();
     $searchStr='';

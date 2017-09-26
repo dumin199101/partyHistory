@@ -110,6 +110,7 @@
     width: 100%;
     height: 40px;
     line-height: 40px;
+    border: 1px solid #F5F3EF;
 }
 .bookFieldsOrderNum{
     width: 10%;
@@ -117,19 +118,19 @@
     text-align: center;
 }
 .bookFieldsTitle{
-    width: 50%;
+    width: 56%;
     height: 100%;
 }
 .bookFieldsAuthor{
-    width: 11%;
+    width: 16%;
     height: 100%;
 }
 .bookFieldsTime{
-    width: 15%;
+    width: 10%;
     height: 100%;
 }
 .bookFieldsDownload{
-    width: 10%;
+    width: 5%;
     height: 100%;
     text-align: center;
 }

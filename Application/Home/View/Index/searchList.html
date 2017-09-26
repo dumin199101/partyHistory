@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <else/>
-                            搜索位置：<input type="radio" name="searchArea" id="searchAreaAll" onclick="searchArea(this.id);" <if condition="($searchAreaMark eq 'searchAreaAll') or ($searchAreaMark eq '')">checked="checked"</if> ><span>全部</span><span><input type="radio" name="searchArea" id="searchAreaTitle" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaTitle'">checked="checked"</if> >仅标题</span><span><input type="radio" name="searchArea" id="searchAreaContent" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaContent'">checked="checked"</if> >仅全文</span><span><input type="radio" name="searchArea" id="searchAreaAuthor" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaAuthor'">checked="checked"</if> >仅作者</span>
+                            搜索位置：<input type="radio" name="searchArea" id="searchAreaAll" onclick="searchArea(this.id);" <if condition="($searchAreaMark eq 'searchAreaAll') or ($searchAreaMark eq '') or ($searchAreaMark eq 'false')">checked="checked"</if> ><span>全部</span><span><input type="radio" name="searchArea" id="searchAreaTitle" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaTitle'">checked="checked"</if> >仅标题</span><span><input type="radio" name="searchArea" id="searchAreaContent" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaContent'">checked="checked"</if> >仅全文</span><span><input type="radio" name="searchArea" id="searchAreaAuthor" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaAuthor'">checked="checked"</if> >仅作者</span>
                         </if>
                     </div>
                     <div class="searchSortBox">
@@ -52,7 +52,7 @@
                 <div id="searchInfoListBox">
                     <foreach name="data" item="vd">
                         <div class="infoBySearchInBook">
-                            <div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__{$vd['v_parent_global']}/{$vd['v_global_guid']}.pdf" target="_blank" ><p>{$vd.v_title}</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>{$vd.n_browser}</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('literatureInfo',array('id'=>$vd['n_id']))}"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>{$vd.v_resource_content}</p></div><div class="attachInfoBySearch"><div>出自文献：<span><a href="{:U('bookDetails',array('id'=>$vd['bookId']))}" class="literatureFrom" >{$vd.v_parent_guid}</a></span></div><div>时间：{$vd.d_publication_time}</div><div>作者：<span>{$vd.v_author}</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div>
+                            <div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__{$vd['v_parent_global']}/{$vd['v_global_guid']}.pdf" target="_blank" ><p>{$vd.v_title}</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>{$vd.n_browser}</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('literatureInfo',array('id'=>$vd['n_id']))}"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>{$vd.v_resource_content}</p></div><div class="attachInfoBySearch"><div>出自文献：<span><a href="{:U('bookDetails',array('id'=>$vd['bookId']))}" class="literatureFrom" >{$vd.v_parent_guid}</a></span></div><div>时间：{$vd.d_publication_time}</div><div>作者：<span>{$vd.v_author}</span></div><div>关键词：{$vd.v_keywords}</div></div>
                         </div>
                     </foreach>
                 </div>
@@ -274,14 +274,14 @@
             document.getElementById("commenSearch").submit();
         }
         
-        function getSearch(it) {
-            var searchWord=it.text;
-            var id=false;
-            $('input[name="searchWord"]').val(searchWord);
-            $('#searchAreaMark').val(id);
-            document.getElementById("commenSearch").submit();
-        }
-        
+//        function getSearch(it) {
+//            var searchWord=it.text;
+//            var id=false;
+//            $('input[name="searchWord"]').val(searchWord);
+//            $('#searchAreaMark').val(id);
+//            document.getElementById("commenSearch").submit();
+//        }
+//
         function getCatNameFilter(it) {
             $(".literatureCatList").find('a').css("color","#0435fd");
             $(it).css("color","red");
@@ -383,7 +383,7 @@
                 data:dataJson,
                 success:function (data) {
                     $(data.data).each(function(i,val){
-                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank"><p>'+val.v_title+'</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>原始来源：根据中共中央党校出版社一九九一年出版的《中共中央文件选集》（一九四一--一九四二）刊印</div></div></div>';
+                        html+='<div class="infoBySearchInBook"><div class="infoBySearchTopBox"><div class="infoBySearchLeftTop"><h4><a href="__MODULE__/Index/read.html?file=__RESOURCE__'+val.v_parent_global+'/'+val.v_global_guid+'.pdf" target="_blank"><p>'+val.v_title+'</p></a></h4></div><div class="infoBySearchRightTop"><p>浏览量（<span>'+val.n_browser+'</span>）&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Index/literatureInfo/id/'+val.n_id+'"><img src="__PUBLIC__/image/book/download.png">下载</a></p></div></div><div class="mainInfoBySearch"><p>'+val.v_resource_content+'</p></div><div class="attachInfoBySearch"><div>出自文献：<span>'+val.v_parent_guid+'</span></div><div>时间：'+val.d_publication_time+'</div><div>作者：<span>'+val.v_author+'</span></div><div>关键词：'+val.v_keywords+'</div></div></div>';
                     });
                     $("#searchInfoListBox").html(html);
                     //总数
