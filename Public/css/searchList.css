@@ -1,0 +1,221 @@
+.searchListBox{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+.searchListLeft{
+    width: 70%;
+    height: 100%;
+    display: inline-block;
+}
+.searchListLeftTop{
+    width: 100%;
+    /*height: 40px;*/
+    line-height: 30px;
+}
+.searchPosition{
+    width: 75%;
+    height: 100%;
+    display: inline-block;
+}
+
+.searchPosition span{
+    margin-right: 3%;
+}
+
+
+.searchSortBox{
+    width: 25%;
+    height: 100%;
+    display: inline-block;
+    text-align: right;
+    float: right;
+}
+
+.infoBySearchInBookBox{
+    border: none;
+}
+.infoBySearchInBook{
+    margin: 0px;
+}
+.reset{
+    margin-left:20px ;
+    color: #2020FD;
+}
+#searchSort{
+    cursor: pointer;
+}
+
+#searchSort:hover+.sortList{
+    display: block;
+}
+.sortList{
+    position: absolute;
+    z-index: 1000;
+    top:40px;
+    width: 90px;
+    height:147px;
+    /*margin-top: 20px;*/
+    margin-left: 90px;
+
+
+}
+
+.sortList:hover{
+    display: block;
+}
+/*.sort_small_bg{*/
+    /*width: 100%;*/
+    /*height: 20px;*/
+    /*position: absolute;*/
+    /*top: 57px;*/
+/*}*/
+
+.sortList ul{
+    /*position: absolute;*/
+    border: 1px solid #DFDFDF;
+    box-shadow:4px 4px 2px #ADADAD;
+    width: 100%;
+    height: 80%;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.sortList ul li{
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    line-height: 25px;
+    background-color:#fff;
+}
+.sortList ul li:hover{
+    background-color:#DFDFDF;
+    cursor: pointer;
+}
+
+.adcencedConditionBox{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.adcencedConditionTitle{
+    width: 15%;
+    font-weight: 900;
+    line-height: 30px;
+    display: inline-block;
+    position: absolute;
+    top:0px;
+}
+.adcencedCondition{
+    width: 80%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    top:0px;
+    left: 15%;
+}
+.adcencedCondition{
+    display: inline-block;
+}
+.adcencedCondition p{
+    width: 100%;
+}
+.adcencedCondition span{
+    margin-right: 0px;
+}
+.infoBySearchInBook{
+    border-bottom:none ;
+    border-top:1px dashed #aeaeae ;
+}
+
+.relationWord{
+    width: 100%;
+    margin-bottom: 15px;
+}
+.relationWord span{
+    color: #CC0000;
+    margin-right: 2%;
+}
+.relationWord p{
+    margin-left: 2%;
+}
+
+/*右侧*/
+.searchListRight{
+    width: 30%;
+    height: 100%;
+    background-color: #F5F3EF;
+    float: right;
+}
+.searchListRightBox{
+    width: 96%;
+    margin: 2% auto;
+}
+.searchListRightBox a{
+    color: #0435FD;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display:inline-block;
+    width: 250px;
+}
+.literatureCatList{
+    width: 100%;
+    height: 100%;
+    margin:20px 0px;
+}
+.literatureCatList h4{
+    margin-left: 2%;
+}
+.literatureCatList p{
+    margin-left: 2%;
+    line-height: 20px;
+}
+
+.literatureCatList p span{
+    float: right;
+    margin-right: 20px;
+    color: #0435FD;
+}
+
+.literatureCatList div{
+    overflow: hidden;
+}
+
+.relationWordBox{
+    width: 40%;
+    display: inline-block;
+}
+.authorsList{
+    width: 96%;
+    margin: 2% auto;
+
+}
+.authorsList span{
+    display: inline-block;
+    width: 46%;
+    margin: 2%;
+    color: #0435fd;
+}
+.authorsList span a{
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+.timesList{
+    width: 96%;
+    margin: 2% auto;
+}
+.timesList span{
+    display: inline-block;
+    width: 27%;
+    margin: 2%;
+    color: #0435fd;
+}
+
+.timesList a{
+    width: 100%;
+}

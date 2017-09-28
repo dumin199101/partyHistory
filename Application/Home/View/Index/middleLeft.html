@@ -1,0 +1,32 @@
+<div class="middleLeftBox">
+    <div class="bookSubjectBox">
+        <h2>图书分类</h2>
+        <p class="title_en">SUBJECT OF BOOKS</p>
+        <div class="bookSubject">
+            <div class="<if condition='$dataCat eq null'> allSujects </if> subjectBox categoryPage">
+                <a href="{:U('bookList')}" class="fullBox">
+                    <span>全部</span>
+                </a>
+            </div>
+            <foreach name="catList" item="vc" >
+                <div class=" <if condition='$dataCat eq $vc[v_title]'> allSujects </if> subjectBox bookListBox categoryPage"><a href="{:U('bookList',array('catId'=>$vc['n_id']))}" class="fullBox" ><span>{$vc.v_title}</span></a></div>
+            </foreach>
+
+        </div>
+    </div>
+    <div class="bookSubjectBox">
+        <h2>中央领导人</h2>
+        <p class="title_en">THE CENTRAL LEADERS</p>
+        <div class="bookSubject">
+            <div class="<if condition='$dataLeader eq null'> allSujects </if> subjectBox">
+               <a  href="{:U('bookList')}" class="fullBox"  > <span>全部</span></a>
+            </div>
+            <foreach name="leaderNames" item="vo">
+                <div class="<if condition='$dataLeader eq $vo[v_title]'> allSujects </if> subjectBox leaderListBox">
+                    <a  href="{:U('bookList',array('leaderId'=>$vo['n_id']))}" class="fullBox" ><span>{$vo.v_title}</span></a>
+                </div>
+            </foreach>
+
+        </div>
+    </div>
+</div>
