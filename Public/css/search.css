@@ -1,0 +1,164 @@
+.searchBox{
+    width: 100%;
+    height: 200px;
+}
+.searchText{
+    color: #A39569;
+    font-size: 20px;
+}
+.searchText p span{
+    display: inline-block;
+    margin-left: 20px;
+    height: 40px;
+}
+.searchTextMark{
+    cursor: pointer;
+}
+.searchTextMark a{
+    color: #a39569;
+}
+.active{
+    background: url("../image/index/down.png") no-repeat bottom;
+}
+
+.search{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    line-height: 58px;
+    border: 1px solid #CDC4AC;
+    border-radius: 5px;
+}
+.searchInput{
+    width: 70%;
+    height: 58px;
+    border-radius: 5px;
+    border: none;
+    text-indent: 1em;
+}
+
+.advancedSearch{
+    width: 15%;
+    height: 100%;
+    position: absolute;
+    right: 15%;
+    top:0px;
+    /*line-height: 58px;*/
+    padding:0px 10px;
+    border-left: 1px solid #CDC4AC;
+}
+.serachButton{
+    width: 15%;
+    height: 100%;
+    position: absolute;
+    right:0px;
+    top:0px;
+    background: url("../image/index/search.png") no-repeat center center;
+    background-color: #CDC4AC;
+    background-size:auto 80%;
+    -moz-background-size:auto 80%;
+    border: medium none;
+}
+
+.advancedSearchBox{
+    width: 100%;
+    height: 400px;
+    display: none;
+    border: 1px solid #CDC4AC;
+    z-index: 1000;
+    background: white;
+    position: absolute;
+    overflow: auto;
+}
+h3{
+    color: #0e0e0e;
+    margin-left: 2%;
+}
+.advancedSearchBox div{
+    display: inline-block;
+}
+.advancedSearchBox select{
+    padding: 3px;
+    /*很关键：将默认的select选择框样式清除*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url("../image/index/uplist.png") no-repeat scroll 97% center transparent;
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-right: 18px;
+}
+.conditionBox{
+    width: 100%;
+    padding: 2%;
+    height: 100px;
+}
+.conditionBox input{
+    border: 1px solid #CDC4AC;
+    height: 40px;
+
+}
+.conditionBox select{
+    border: 1px solid #CDC4AC;
+    height: 40px;
+    text-align: center;
+}
+.addButton{
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 20px;
+    border: 1px solid #CDC4AC;
+    text-align: center;
+}
+.searchField{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.searchField input{
+    width: 24%;
+}
+.searchField select{
+    width: 90px;
+}
+.fieldRelation{
+    margin-right: 5px;
+}
+
+.timeSectionBox{
+    width: 100%;
+    height: 100%;
+}
+
+.timeSectionBox input{
+    width: 39%;
+}
+.inputText{
+    width: 85%;
+}
+.literatureCat{
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.advancedSearchButton{
+    width: 100%;
+}
+.buttonStyle{
+    width: 20%;
+    height: 40px;
+    line-height: 40px;
+    /*background-color: white;*/
+    /*border: 1px solid #CDC4AC;*/
+    border-radius: 3px;
+    margin-right: 5%;
+    background-color: black;
+    border: 1px solid #000;
+    color: white;
+}
+.buttonStyle:hover{
+    background-color: black;
+    border: 1px solid #000;
+    color: white;
+}
