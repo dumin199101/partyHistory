@@ -132,12 +132,6 @@ class XSUtil
         dump($words);
     }
 
-//    public function getCustomDict($config){
-//        self::$xs = self::getInstance($config);
-//        $tokenizer=new \XSTokenizerScws;
-//        XSIndex::getCustomDict
-//    }
-
     /**
      *获取建议词
      * @param $config xunseearch项目名
