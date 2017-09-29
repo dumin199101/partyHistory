@@ -51,7 +51,7 @@ return array(
     'DB_HOST' => '127.0.0.1', // 服务器地址
     'DB_NAME' => 'partyhistory', // 数据库名
     'DB_USER' => 'root', // 用户名
-    'DB_PWD' => 'lhh2012', // 密码
+    'DB_PWD' => '123456', // 密码
     'DB_PORT' => '3306', // 端口
     'DB_PREFIX' => 'tb_', // 数据库表前缀
 
