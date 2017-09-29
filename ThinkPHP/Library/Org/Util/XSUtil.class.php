@@ -67,6 +67,7 @@ class XSUtil
                 }
             }
         }
+
         if(!empty($params['sort']&&is_array($params['sort']))){
             $searchObj->setSort($params['sort'][0],$params['sort'][1]=='desc'?false:true);
         }
@@ -78,7 +79,6 @@ class XSUtil
             $searchObj->setFuzzy();
         }
         $searchObj->setQuery($name)->setFacets(array_keys($params['filter']),true)->addQueryString(self::$where,0);
-//        var_dump($params['timeRange']);die;
         if(!empty($params['timeRange']) && is_array($params['timeRange']) ){
             $searchObj->addRange($params['timeRange'][0],$params['timeRange'][1],$params['timeRange'][2]);
         }
@@ -88,11 +88,16 @@ class XSUtil
         if(!empty($docs)&&is_array($docs)){
             if(!empty($params['filter'])&&is_array($params['filter'])) {
                 foreach ($params['filter'] as $key => $val) {
-//                    var_dump($searchObj->getFacets($key));die;
-//                    $count[$key . "_count"] =arraySequence($searchObj->getFacets($key));
                     $count[$key . "_count"] =$searchObj->getFacets($key);
                     if($key=='v_parent_guid'){
-                        ksort($count[$key . "_count"],SORT_NATURAL);
+                        arsort($count[$key . "_count"]);
+                    }
+                    if($key=='v_author'){
+                        arsort($count[$key . "_count"]);
+                    }
+
+                    if($key=='v_cat_name'){
+                        arsort($count[$key . "_count"]);
                     }
                 }
             }

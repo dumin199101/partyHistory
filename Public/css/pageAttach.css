@@ -1,5 +1,5 @@
 #page{
-    margin: 20px auto;
+    margin-bottom: 20px;
     text-align: center;
     width: 77%;
     display: inline-block;
@@ -19,6 +19,7 @@
 }
 .pageBox{
     position: relative;
+    top: 20px;
 }
 
 .totalCount{

@@ -24,7 +24,7 @@ function middleBoxHeight() {
     if(left>=right){
         $(".bookMeddleRight").height(left-2);
     }else{
-        $(".middleLeftBox").height(right+2);
+        $(".middleLeftBox").height(right+2+60);
     }
 }
 

@@ -1,9 +1,7 @@
 <div class="search">
     <form action="{:U('searchList')}" method="post" id="commenSearch">
-        <input name="searchWord" value="{$searchWord}" class="searchInput" autocomplete="off" >
-        <!--<input type="hidden" name="parentGuid" id="parentGuid" value=""/>-->
-        <input type="hidden" name="searchAreaMark" id="searchAreaMark" value="{$searchAreaMark}"/>
-        <!--<input type="hidden" name="searchAreaMark" id="searchAreaMark" value="{$searchAreaMark}"/>-->
+        <input name="searchWord" value="{$searchWord|default=''}" class="searchInput" autocomplete="off" >
+        <input type="hidden" name="searchAreaMark" id="searchAreaMark" value="{$searchAreaMark|default=''}"/>
         <div class="advancedSearch" onclick="advanceSearchShow()">
             <span>高级检索</span>&nbsp;<img src="__PUBLIC__/image/index/uplist.png">
         </div>

@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <else/>
-                            搜索位置：<input type="radio" name="searchArea" id="searchAreaAll" onclick="searchArea(this.id);" <if condition="($searchAreaMark eq 'searchAreaAll') or ($searchAreaMark eq '') or ($searchAreaMark eq 'false')">checked="checked"</if> ><span>全部</span><span><input type="radio" name="searchArea" id="searchAreaTitle" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaTitle'">checked="checked"</if> >仅标题</span><span><input type="radio" name="searchArea" id="searchAreaContent" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaContent'">checked="checked"</if> >仅全文</span><span><input type="radio" name="searchArea" id="searchAreaAuthor" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaAuthor'">checked="checked"</if> >仅作者</span>
+                            搜索位置：<input type="radio" name="searchArea" id="searchAreaAll" onclick="searchArea(this.id);" <if condition="($searchAreaMark eq 'searchAreaAll') or ($searchAreaMark eq '') or ($searchAreaMark eq 'false')">checked="checked"</if> ><span>全部</span><span class="emptySearchArea" hidden><input type="radio" name="searchArea" id="searchAreaTitle" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaTitle'">checked="checked"</if> >标题</span><span class="emptySearchArea" hidden><input type="radio" name="searchArea" id="searchAreaContent" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaContent'">checked="checked"</if> >全文</span><span class="emptySearchArea" hidden><input type="radio" name="searchArea" id="searchAreaAuthor" onclick="searchArea(this.id);" <if condition="$searchAreaMark eq 'searchAreaAuthor'">checked="checked"</if> >作者</span>
                         </if>
                     </div>
                     <div class="searchSortBox">
@@ -80,7 +80,7 @@
                         <p><a href="javascript:void(0)" onclick="getCatNameFilter(this)">{$key}</a><span>({$vc})</span></p>
                     </foreach>
                     </div>
-                    <p onclick="showCatName(this.id)" class="showCatName" id="categoryList_0" hidden><a>查看更多</a></p>
+                    <p onclick="showCatName(this.id)" class="showCatName" id="categoryList_0" hidden><a><img src="__PUBLIC__/image/index/moreShow.png" height="20px" style="cursor: pointer" ></a></p>
                 </div>
                 <div class="literatureCatList">
                     <h4>文献出自</h4>
@@ -89,15 +89,15 @@
                         <p><a href="javascript:void(0)" onclick="getParentGuidFilter(this)">{$key}</a><span>({$vp})</span></p>
                     </foreach>
                     </div>
-                    <p onclick="showParentGuid(this.id)" class="ParentGuid" id="parentList_0" hidden><a>查看更多</a></p>
+                    <p onclick="showParentGuid(this.id)" class="ParentGuid" id="parentList_0" hidden><a><img src="__PUBLIC__/image/index/moreShow.png" height="20px" style="cursor: pointer" ></a></p>
 
                 </div>
                 <div class="literatureCatList">
                     <h4>文献作者</h4>
                         <div class="authorsList">
-                            <foreach name="authorList" item="va"><span><a href="javascript:void(0)" onclick="getAuthorFilter(this)" title="{$key}">{$key}</a>（{$va}）</span></foreach>
+                            <foreach name="authorList" item="va"><p><a href="javascript:void(0)" onclick="getAuthorFilter(this)" title="{$key}">{$key}</a><span>({$va})</span></p></foreach>
                         </div>
-                    <p onclick="showAuthor(this.id)" class="showAuthor" id="authorList_0" hidden><a>查看更多</a></p>
+                    <p onclick="showAuthor(this.id)" class="showAuthor" id="authorList_0" hidden><a><img src="__PUBLIC__/image/index/moreShow.png" height="20px" style="cursor: pointer" ></a></p>
                 </div>
                 <div class="literatureCatList">
                     <h4>发表时间</h4>
@@ -106,7 +106,7 @@
                             <span><a href="javascript:void(0)" onclick="getYearFilter(this)">{$key}年</a></span>
                         </foreach>
                     </div>
-                    <p onclick="showYear(this.id)" class="showYear" id="yearList_0" hidden><a>查看更多</a></p>
+                    <p onclick="showYear(this.id)" class="showYear" id="yearList_0" hidden><a><img src="__PUBLIC__/image/index/moreShow.png" height="20px" style="cursor: pointer" ></a></p>
                 </div>
                 <div class="literatureCatList">
                     <if condition="$relatedWord neq null">
@@ -130,7 +130,7 @@
             showYear('yearList_0)');
         }
 
-        var authorsList=$('.authorsList').children('span').length;
+        var authorsList=$('.authorsList').children('p').length;
         if(authorsList<6){
             $('.authorsList').height('100%');
         }else{
@@ -183,14 +183,14 @@
         }
 
         function showAuthor(id){
-            var authorsList=$('.authorsList').children('span').length;
+            var authorsList=$('.authorsList').children('p').length;
             var clickNumArr=id.split('_');
             var clickNum=parseInt(clickNumArr[1])+1;
-            if(Math.ceil(authorsList/6)>clickNum){
-                var lineHight=clickNum*114.7998+'px';
+            if(Math.ceil(authorsList/5)>clickNum){
+                var lineHight=clickNum*125+'px';
                 $('.authorsList').height(lineHight);
                 $('.showAuthor').attr('id','authorList_'+clickNum);
-            }else if(Math.ceil(authorsList/6)==clickNum){
+            }else if(Math.ceil(authorsList/5)==clickNum){
                 $('.showAuthor').hide();
                 $('.authorsList').height('100%');
             }
@@ -273,15 +273,7 @@
             $('#searchAreaMark').val(id);
             document.getElementById("commenSearch").submit();
         }
-        
-//        function getSearch(it) {
-//            var searchWord=it.text;
-//            var id=false;
-//            $('input[name="searchWord"]').val(searchWord);
-//            $('#searchAreaMark').val(id);
-//            document.getElementById("commenSearch").submit();
-//        }
-//
+
         function getCatNameFilter(it) {
             $(".literatureCatList").find('a').css("color","#0435fd");
             $(it).css("color","red");
@@ -325,7 +317,6 @@
             var isAdcenced={$isAdcenced};
             if(isAdcenced==1){
                 var num=$('.fieldRelation').length+1;
-//                var fieldRelation=[];
                 var data={};
                 for(i=1;i<=num;i++){
                     if(typeof ($('.fieldRelation_'+i).val())!=='underfind'){
@@ -355,6 +346,9 @@
                 console.log(data);
             }else{
                 var searchWord=$('input[name="searchWord"]').val();
+                if(searchWord!==''){
+                    $('.emptySearchArea').show();
+                }
                 var searchAreaMark=$('input[name="searchAreaMark"]').val();
                 var data={searchWord:searchWord,searchAreaMark:searchAreaMark};
             }

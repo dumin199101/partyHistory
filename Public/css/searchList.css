@@ -158,7 +158,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     display:inline-block;
-    width: 250px;
+    width: 240px;
 }
 .literatureCatList{
     width: 100%;
@@ -188,23 +188,23 @@
     display: inline-block;
 }
 .authorsList{
-    width: 96%;
+    width: 100%;
     margin: 2% auto;
 
 }
-.authorsList span{
-    display: inline-block;
-    width: 46%;
-    margin: 2%;
-    color: #0435fd;
-}
-.authorsList span a{
-    width: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-}
+/*.authorsList span{*/
+    /*display: inline-block;*/
+    /*width: 46%;*/
+    /*margin: 2%;*/
+    /*color: #0435fd;*/
+/*}*/
+/*.authorsList span a{*/
+    /*width: 60%;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
+    /*display: inline-block;*/
+/*}*/
 .timesList{
     width: 96%;
     margin: 2% auto;

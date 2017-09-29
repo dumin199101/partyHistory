@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>中共党史经典文献资料库</title>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/slide.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css/login.css" />
+    <link type="image/x-icon" href="__PUBLIC__/image/index/partyhistory.ico" rel="shortcut icon">
+    <link href="__PUBLIC__/css/main_base.css" rel="stylesheet" />
+    <style>
+        .main_login_footer{
+            position: fixed;
+            bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="login">
+
+    <!--轮播-->
+    <div id="banner">
+        <div id="banner_bg"></div>
+        <div id="banner_info"></div>
+
+        <ul style="display:none;">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+
+        <div id="banner_list">
+            <a href="javascript:void(0)"><img src="__PUBLIC__/image/login/gallery_1.jpg" title="执政创业" alt="执政创业" /></a>
+            <a href="javascript:void(0)"><img src="__PUBLIC__/image/login/gallery_2.jpg" title="开天辟地" alt="开天辟地" /></a>
+            <a href="javascript:void(0)"><img src="__PUBLIC__/image/login/gallery_3.jpg" title="科学发展" alt="科学发展" /></a>
+
+        </div>
+
+    </div>
+    <!--轮播-->
+
+    <div id="login_form">
+        <div id="logo">
+            <img src="__PUBLIC__/image/index/logo.png" alt="logo" width="300px" />
+        </div>
+
+        <div id="form">
+            <form id="checkform">
+                <div>
+                    <input type="text"  id="username" value="" name="info[v_user_name]"/>
+                </div>
+
+                <div>
+                    <input type="password"  id="password" value="" name="info[v_user_pwd]"/>
+                </div>
+
+                <div id="error">
+                    &nbsp;
+                </div>
+
+                <div style="color:#aaa;">
+
+                    <input type="submit"  id="submit" value=""/>
+                    <!--
+                    <input id="login_flag" type="checkbox" name="remember" value="1"/>&nbsp;&nbsp;两周内免登录
+                    -->
+                </div>
+
+            </form>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+<div class="main_footer main_login_footer">
+    <p>版权所有&copy;&nbsp;&nbsp;&nbsp;谷浪远景（北京）科技发展有限公司</p>
+</div>
+
+
+
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+
+
+    function formAjaxSubmit(url,formObj){
+
+        if(!formObj||formObj==''){
+            var formObj="form";
+        }
+        if(!url||url==''){
+            var url=document.URL;
+        }
+        $(formObj).ajaxSubmit({
+            url:url,
+            type:"POST",
+            success:function(data, st) {
+
+
+
+                // var data = eval("(" + data + ")");
+
+                if(data.status==1){
+
+                    setTimeout(function(){
+                        top.window.location.href=data.url;
+                    },500);
+
+                }else if(data.status == 0){
+
+
+
+                    $('#error').html(data.msg);
+
+                }
+                if(data.url&&data.url!=''){
+                    setTimeout(function(){
+                        top.window.location.href=data.url;
+                    },1000);
+                }
+
+
+                if(data.url==''){
+                    setTimeout(function(){
+                        top.window.location.reload();
+                    },1000);
+                }
+
+            }
+        });
+        return false;
+    }
+
+    $(function(){
+        $("#submit").click(function(){
+            formAjaxSubmit("{:U('login/check')}",'#checkform');
+            return false;
+        });
+    });
+
+    //实现垂直居中：
+    $("#login").css({
+        position: "relative",
+        left: ($(window).width() - $("#login").outerWidth())/2,
+        top: ($(window).height() - $("#login").outerHeight())/2
+    });
+
+
+
+</script>

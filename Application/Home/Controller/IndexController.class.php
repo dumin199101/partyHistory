@@ -1,27 +1,26 @@
 <?php
 namespace Home\Controller;
-use Think\Controller;
-use Home\Model\NewspaperModel;
+use Common\Controller\BaseController;
 use Org\Util\XSUtil;
-use Think\Model;
 
-class IndexController extends Controller {
+class IndexController extends BaseController {
     /*首页展示*/
     public function index(){
         $catList=$this->categoryList(1,100);
         $this->assign('catList',$catList['data']);
         $this->assign('searchTextMark',1);
+        $this->assign('adcencedSearWord','');
         $this->display();
 
     }
-
+    /*领导人列表*/
     public function leaderList(){
         $catModel=M('leader');
         $data=$catModel->field('n_id,v_title')->select();
         return $data;
     }
 
-    /*首页展示*/
+    /*图书列表页展示*/
     public function bookList(){
         $catId=I('get.catId');
         $leaderId=I('get.leaderId');
@@ -38,12 +37,14 @@ class IndexController extends Controller {
         $this->assign('leaderId',$leaderId);
         $this->assign('count',$data['count']);
         $this->assign('searchTextMark',2);
+        $this->assign('adcencedSearWord','');
         $this->display();
 
     }
     public function bookListData($page,$catId='',$leaderId=''){
         $pageSize=C('PAGENUM');
         $bookModel=M('book_info');
+        $map=array();
         if($catId) {
             $map['n_cat_id'] = $catId;
         }
@@ -60,6 +61,7 @@ class IndexController extends Controller {
             $data['catMark']=$data['data'][0]['catname'];
             $data['dimensionMark']='图书分类';
         }
+        $data['leaderMark']='';
         if($leaderId){
             $data['leaderMark']=$data['data'][0]['leadername'];
             $data['dimensionMark']='中央领导人';
@@ -86,12 +88,16 @@ class IndexController extends Controller {
         $leaderNames=$this->leaderList();
         $bookId=I('get.id');
         $bookModel=M('book_info');
-        $bookInfo=$bookModel->alias('a')->field('a.*,b.v_title as catName')->where('a.n_id='.$bookId)->join('tb_category as b on a.n_cat_id= b.n_id')->find();
+        $bookInfo=$bookModel->alias('a')->field('a.*,b.v_title as catname')->where('a.n_id='.$bookId)->join('tb_category as b on a.n_cat_id= b.n_id')->find();
+        $dataCat='';
         $catList=$this->categoryList(1,100);
+        $this->assign('dataCat',$dataCat);
         $this->assign('leaderNames',$leaderNames);
+        $this->assign('dataLeader','');
         $this->assign('catList',$catList['data']);
         $this->assign('bookInfo',$bookInfo);
         $this->assign('searchTextMark',2);
+        $this->assign('adcencedSearWord','');
         $this->display();
     }
 
@@ -206,7 +212,7 @@ class IndexController extends Controller {
         if($timeStr!==false){
             return date('Y-m-d',$timeStr);
         }else{
-            var_dump(2222);die;
+            $this->error('时间格式不正确');
         }
     }
 
@@ -219,8 +225,6 @@ class IndexController extends Controller {
         $timeEnd=I('post.timeEnd','');
         $timeStart=I('post.timeStart');
         $isAdcenced=I("post.adcencedMark",0);
-//        $adcencedSearWord='';
-        $searchWordArr='';
         $catList=$this->categoryList(1,100);
         $this->assign('catList',$catList['data']);
         if($isAdcenced==1){
@@ -228,12 +232,14 @@ class IndexController extends Controller {
         }else{
             $searchData=$this->dealCommendSearData();
         }
-        if(isset($searchData['timeRange'])){
-            $timeRange=$searchData['timeRange'];
+
+        if(!empty($searchData['adcencedSearWord']['timeStart']) || !empty($searchData['adcencedSearWord']['timeEnd'])){
+            $timeRange[0]='d_publication_time';
+            $timeRange[1]=empty($searchData['adcencedSearWord']['timeStart'])?'':$searchData['adcencedSearWord']['timeStart'];
+            $timeRange[2]=empty($searchData['adcencedSearWord']['timeEnd'])?'':$searchData['adcencedSearWord']['timeEnd'];
         }else{
             $timeRange='';
         }
-
         $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$timeRange,$catName);
         $relatedWord=XSUtil::getRelatedQuery($config,$searchData['searchWord']);
         $this->assign('isAdcenced',$isAdcenced);
@@ -257,7 +263,7 @@ class IndexController extends Controller {
             $this->assign('adcencedSearWord',$searchData['adcencedSearWord']);
             $this->display();
         }else{
-            var_dump(11111);die;
+            $this->emptyShow($searchData['searchWord']);
         }
 
 
@@ -266,7 +272,6 @@ class IndexController extends Controller {
     public function ajaxSearchData()
     {
         $config=C('SEARCH.PARTYLITERATURE');
-//        $name=I('post.searchWord');
         $isAdcenced=I("post.adcencedMark");
         $author=I('post.author');
         $v_publication_year=I('post.publicationYear');
@@ -278,6 +283,13 @@ class IndexController extends Controller {
             $searchData=$this->dealAdcencedSearData();
         }else{
             $searchData=$this->dealCommendSearData();
+        }
+        if(!empty($searchData['adcencedSearWord']['timeStart']) || !empty($searchData['adcencedSearWord']['timeEnd'])){
+            $timeRange[0]='d_publication_time';
+            $timeRange[1]=empty($searchData['adcencedSearWord']['timeStart'])?'':$searchData['adcencedSearWord']['timeStart'];
+            $timeRange[2]=empty($searchData['adcencedSearWord']['timeEnd'])?'':$searchData['adcencedSearWord']['timeEnd'];
+        }else{
+            $timeRange='';
         }
         $data=$this->searchData($config,$searchData['name'],$searchData['page'],$author,$searchData['accurate'],$v_publication_year,$parentGuid,$timeRange,$catName,$sort);
         $this->ajaxReturn($data,'json');
@@ -380,7 +392,6 @@ class IndexController extends Controller {
                 }else{
                     $timeRange=array();
                 }
-                //var_dump($sort);die;
                 if(!empty($sort)){
                     $sort=$sort;
                 }else{
@@ -490,9 +501,36 @@ class IndexController extends Controller {
             $this->display();
     }
 
-    public function getResult(){
+    public function emptyShow($searchWord=''){
+        // 由于拼写错误，这种情况返回的数据量可能极少甚至没有，因此调用下面方法试图进行修正
         $config=C('SEARCH.PARTYLITERATURE');
-        $data=XSUtil::getResult($config,'马尔科夫尼科夫规则是由俄罗斯科学家发现的');
-        var_dump($data);die;
+        $searchAreaMark=I('post.searchAreaMark','searchAreaAll');
+        switch ($searchAreaMark){
+            case 'searchAreaAuthor':
+                $searchAreaMark="检索域：<span>作者</span>";
+                break;
+            case 'searchAreaTitle':
+                $searchAreaMark='检索域：<span>标题</span>';
+                break;
+            case 'searchAreaContent':
+                $searchAreaMark='检索域：<span>正文</span>';
+                break;
+            default:
+                $searchAreaMark='<span>高级检索</span>';
+        }
+        if($searchWord){
+            $corrected = XSUtil::getExpandedQuery($config,$searchWord);
+            if (count($corrected) !== 0){
+                $word=$corrected;
+            }else{
+                $word=$searchWord;
+            }
+            $this->assign('word',$word);
+        }
+        $this->assign('searchWord',$searchWord);
+        $this->assign('adcencedSearWord','');
+        $this->assign('searchAreaText',$searchAreaMark);
+        $this->display('emptyShow');
     }
+
 }

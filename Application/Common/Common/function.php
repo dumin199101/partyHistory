@@ -430,6 +430,9 @@ function write_loginlog($user, $passwd, $login_success, $isvip, $isnouserip, $ip
  */
 function write_weblog($url, $uid,$query_str=array())
 {
+    if(empty($uid)){
+        return;
+    }
     if(!empty($query_str)){
         $query_str=json_encode($query_str);
     }else{
