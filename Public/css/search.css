@@ -78,12 +78,13 @@ h3{
     display: inline-block;
 }
 .advancedSearchBox select{
-    padding: 3px;
+    line-height: 38px;
+    padding-left: 3px;
+    /*padding-bottom: 3px;*/
     /*很关键：将默认的select选择框样式清除*/
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
-
     /*在选择框的最右侧中间显示小箭头图片*/
     background: url("../image/index/uplist.png") no-repeat scroll 97% center transparent;
     /*为下拉小箭头留出一点位置，避免被文字覆盖*/
